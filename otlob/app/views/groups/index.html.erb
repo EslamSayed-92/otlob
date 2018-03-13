@@ -2,6 +2,28 @@
 
 <h1>Groups</h1>
 
+<%= render 'form', group: @group %>
+
+<fieldset>
+  <legend>Your Groups</legend>
+  <ul>
+    <% for grp in current_user.groups %>
+      <button class="shGroup" data="<%= grp.id %>"><%= grp.name %></button>
+    <% end %>
+  </ul>
+</fieldset>
+
+<fieldset>
+  <legend>Group</legend>
+  <form id="findFriend">
+    <label for="fmail">Your friend email:</label>
+    <input type="email" name="fmail" required="required">
+    <input type="submit" value="Add" name="add">
+  </form>
+  <div id="grp">
+  </div>
+</fieldset>
+
 <table>
   <thead>
     <tr>
@@ -12,15 +34,7 @@
   </thead>
 
   <tbody>
-    <% @groups.each do |group| %>
-      <tr>
-        <td><%= group.name %></td>
-        <td><%= group.user %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    
   </tbody>
 </table>
 
