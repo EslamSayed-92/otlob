@@ -24,12 +24,12 @@ $(function(){
 			url:"/groups/"+$(this).attr('data')+".json",
 			method:"get",
 			success:function(res){
-				$("#grp").prevAll("legend").text(res.name);
+				$("#grp").prevAll("legend").text(res.name+" Group");
 				$.each(res.users, function( index, user ) {
 					console.log(user)
 					htmlTxt = "<div class='col-3-'><img src="+user.avatar_url+">"
-					htmlTxt +="<h3>"+user.name+"</h3>"
-        			htmlTxt += "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/friendships/"+user.id+"'>Remove</a>"
+					htmlTxt +="<strong>"+user.name+"</strong>"
+        			htmlTxt += "<a data-confirm='Remove "+user.name+" from "+res.name+" group ?' rel='nofollow' data-method='delete' href='/friendships/"+user.id+"'>Remove</a>"
         			htmlTxt += "</div>"
         			$("#grp").html($("#grp").html()+htmlTxt)
 
@@ -40,8 +40,8 @@ $(function(){
 
 	})
 
-	$("#delFriend").click(function(e){
-		e.preventDefault();
-
+	$("#addFriendToGroup").submit(function(e){
+		
 	})
+
 })

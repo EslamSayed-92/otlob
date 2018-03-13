@@ -8,14 +8,21 @@
   <legend>Your Groups</legend>
   <ul>
     <% for grp in current_user.groups %>
-      <button class="shGroup" data="<%= grp.id %>"><%= grp.name %></button>
+      <div class="btn-group">
+        <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
+        <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
+        <%= link_to '', group_path(grp), method: :delete, data: { confirm: 'Are you sure?' },
+         :class => "glyphicon glyphicon-minus"  %>
+        <!-- <button class="shGroup " data="<%= grp.id %>"></button> -->
+      </div>
+      
     <% end %>
   </ul>
 </fieldset>
 
 <fieldset>
   <legend>Group</legend>
-  <form id="findFriend">
+  <form id="addFriendToGroup">
     <label for="fmail">Your friend email:</label>
     <input type="email" name="fmail" required="required">
     <input type="submit" value="Add" name="add">

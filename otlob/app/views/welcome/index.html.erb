@@ -3,15 +3,14 @@
 		<% @orders.each do |order|%>
 			<div class="post_wrapper"  id="ordershereTest">
 				<% if order.mtype == 0 %>
-				  	<h2>BreakFast</h2>
+				  	BreakFast 
 				<% else %>
-				  	<h2>Lunch</h2>
+				  	Lunch 
 				<% end %>
-				<p>From : <%= order.restaurant %></p>
-				<p>Ordered By :<%= User.find(order.user_id).name%> </p>
-				<p class="date">
-					<%=  time_ago_in_words(order.created_at) %> ago
-				</p>
+				From : <%= order.restaurant %>
+				<p> Ordered By :<%= User.find(order.user_id).name%>
+				 ...<%=  time_ago_in_words(order.created_at) %> ago</p>
+				<%= link_to "Show", order_path(order.id) %>
 			</div>
 		<% end %>
 </fieldset>
