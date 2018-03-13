@@ -8,36 +8,30 @@
   <legend>Your Groups</legend>
   <ul>
     <% for grp in current_user.groups %>
-      <button class="shGroup" data="<%= grp.id %>"><%= grp.name %></button>
+      <div class="btn-group">
+        <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
+        <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
+        <% if current_user.id==grp.user_id %>
+          <%= link_to '', group_path(grp), method: :delete, data: { confirm: 'Are you sure?' },
+         :class => "glyphicon glyphicon-minus"  %>
+        <% end %>
+      </div>
+      
     <% end %>
   </ul>
 </fieldset>
 
 <fieldset>
   <legend>Group</legend>
-  <form id="findFriend">
+  <form id="addFriendToGroup">
     <label for="fmail">Your friend email:</label>
     <input type="email" name="fmail" required="required">
+    <input type="hidden" name="group" id="curGrp">
     <input type="submit" value="Add" name="add">
   </form>
   <div id="grp">
   </div>
 </fieldset>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    
-  </tbody>
-</table>
 
 <br>
-
-<%= link_to 'New Group', new_group_path %>

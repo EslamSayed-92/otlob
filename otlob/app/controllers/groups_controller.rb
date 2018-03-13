@@ -29,16 +29,18 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
+    # group_params[:user] = User.find(current_user.id)
     @group = Group.new(group_params)
+    @group.user = current_user
 
     respond_to do |format|
       if @group.save
         @group.users.push(current_user)
 
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to groups_url, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
@@ -56,6 +58,35 @@ class GroupsController < ApplicationController
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  #= Function to Add friend To Group from Add Friend form
+  def addToGroup
+    @friend = User.where(email: params[:fmail]).take
+    @group = Group.find(params[:group])
+    @res = Hash.new
+    if @friend.present?
+      if !check_if_friend(@friend.id)
+        @res = { error: true, message: "You are not friend to "+@friend.email+" to add to Group" }
+      elsif check_in_group(@group,@friend)
+        @res = { error: true, message: @friend.name+" is already a member in the Group" }
+      else
+        @added = @group.users.push(@friend)
+        if @added
+          @res = { error: false, message: @friend.name+" added to "+@group.name+" group" }
+        else
+          @res = { error: true, message: "Unable to add "+@friend.email+" to "+@group.name+" group" }
+        end
+      end
+    else
+      @res = {error: true, message: params[:fmail]+" doesn't exist"}
+    end
+    render json: @res
+  end
+
+  #= Function to Remove friend from Group
+  def removeFromGroup
+    p params
   end
 
   # DELETE /groups/1
@@ -77,5 +108,24 @@ class GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:name,:user)
+    end
+
+
+    def check_if_friend(friend_id)
+      @friendship = Friendship.where(user_id: current_user.id, friend_id: friend_id).take
+      if @friendship.present?
+        return true
+      else
+        return false
+      end
+    end
+
+    def check_in_group(group,friend)
+      for user in group.users
+        if user.id == friend.id
+          return true
+        end
+      end
+      return false
     end
 end

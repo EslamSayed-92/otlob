@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20180313170400) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "groups_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -94,6 +96,7 @@ ActiveRecord::Schema.define(version: 20180313170400) do
 
   add_foreign_key "invitations", "orders"
   add_foreign_key "invitations", "users"
+  add_foreign_key "groups", "users"
   add_foreign_key "items", "orders"
   add_foreign_key "items", "users"
   add_foreign_key "orders", "users"
