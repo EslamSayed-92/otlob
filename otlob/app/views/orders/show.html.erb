@@ -2,17 +2,18 @@
 
 <p>
   <strong>Type:</strong>
-  <%= @order.type %>
+  <% if @order.mtype == 0 %>
+  	<p>BreakFast</p>
+  <% else %>
+  	<p>Lunch</p>
+  <% end %>
 </p>
-
-<p>
   <strong>Restaurant:</strong>
   <%= @order.restaurant %>
-</p>
 
 <p>
   <strong>User:</strong>
-  <%= @order.user %>
+  <%= @order.user_id %>
 </p>
 
 <%= link_to 'Edit', edit_order_path(@order) %> |

@@ -1,11 +1,23 @@
 <fieldset>
 	<legend>Order List</legend>
-	<% for order in @orders %>
-	<li><%= order.type %>ordered from <%= order.restaurant %> at <%= order.created_at %></li>
-	<% end %>
+		<% @orders.each do |order|%>
+			<div class="post_wrapper">
+				<% if order.mtype == 0 %>
+				  	<h2>BreakFast</h2>
+				<% else %>
+				  	<h2>Lunch</h2>
+				<% end %>
+				<p>From : <%= order.restaurant %></p>
+				<p>Ordered By :<%= User.find(order.user_id).name%> </p>
+				<p class="date">
+					<%=  time_ago_in_words(order.created_at) %> ago
+				</p>
+			</div>
+		<% end %>
 </fieldset>
 
 <fieldset>
 	<legend>Friends Activity</legend>
 </fieldset>
+
 <br/>
