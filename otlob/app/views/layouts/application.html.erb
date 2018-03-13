@@ -19,9 +19,11 @@
     </ul>
   </div>
   <div class="nav-right">
+  <% if !current_user.nil? %>
     <%= image_tag current_user.avatar.url(:thumb) %>
     <%= current_user.name %>
     <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
+  <% end %>
   </div>
   </nav>
 
