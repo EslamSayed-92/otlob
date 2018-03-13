@@ -6,5 +6,6 @@ for user in group.users
 	u[:id] = user.id
 	@localusers.push(u)
 end
+json.id group.id
 json.name group.name
 json.users @localusers

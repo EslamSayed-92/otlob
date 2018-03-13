@@ -25,14 +25,16 @@ $(function(){
 			method:"get",
 			success:function(res){
 				$("#grp").prevAll("legend").text(res.name+" Group");
+				$("#curGrp").val(res.id);
+				$("#addFriendToGroup").css({'display':'block'});
+				$("#grp").html("");
 				$.each(res.users, function( index, user ) {
-					console.log(user)
 					htmlTxt = "<div class='col-3-'><img src="+user.avatar_url+">"
 					htmlTxt +="<strong>"+user.name+"</strong>"
-        			htmlTxt += "<a data-confirm='Remove "+user.name+" from "+res.name+" group ?' rel='nofollow' data-method='delete' href='/friendships/"+user.id+"'>Remove</a>"
-        			htmlTxt += "</div>"
+					htmlTxt += "<button data-confirm='Remove "+user.name+" from "+res.name+" group ?' "
+					htmlTxt += "data='group_id:"+res.id+",user_id:"+user.id+"' class='remFriend'>"
+        			htmlTxt += "Remove</button></div>"
         			$("#grp").html($("#grp").html()+htmlTxt)
-
 				})
 
 			}
@@ -41,6 +43,23 @@ $(function(){
 	})
 
 	$("#addFriendToGroup").submit(function(e){
+		e.preventDefault();
+		gdata = $(this).serialize();
+		$.ajax({
+			url:"/groups/addToGroup",
+			method:"post",
+			data:gdata,
+			success: function(res){
+				$("#notice").text(res.message);
+				if(res.error)
+					$("#notice").addClass("alert alert-danger")
+				else
+					$("#notice").addClass("alert alert-success")
+			}
+		})
+	})
+
+	$("").on("click",function(e){
 		
 	})
 
