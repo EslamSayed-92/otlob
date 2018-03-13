@@ -11,28 +11,37 @@
     </div>
   <% end %>
 
+<div style="float: left;">
+    <div class="field">
+      <%= form.label :menu %><br>
+      <%= form.file_field :menu %>
+    </div>
 
-  <div class="field">
-    <%= form.label :menu %><br>
-    <%= form.file_field :menu %>
-  </div>
+    <div class="field">
+      <%= form.label :'Order For' %><br />
+      <input name="mtype" value="0" type="radio"> BreakFast<br/>
+      <input name="mtype" value="1" type="radio" checked="checked"> Lunch <br/>
+    </div>
 
-  <div class="field">
-    <%= form.label :'Order For' %><br />
-    <input name="mtype" value="0" type="radio"> BreakFast<br/>
-    <input name="mtype" value="1" type="radio"> Lunch <br/>
-  </div>
+    <div class="field">
+      <%= form.label :'From' %><br />
+      <%= form.text_field :restaurant, id: :order_restaurant %>
+    </div>
+     <div id="friends">
+      <%= form.label :'Friends' %><br />
+      <% for friendship in current_user.friendships %>
+         <p> <%= friendship.friend.name %> </p>
+         <p> <%= friendship.friend.name %> </p>
+      <% end %>
+    </div>
+    <div class="field" style="display: none">
+      <%= form.label :user_id %>
+      <%= form.text_field :user_id, id: :order_user_id %>
+    </div>
 
-  <div class="field">
-    <%= form.label :'From' %><br />
-    <%= form.text_field :restaurant, id: :order_restaurant %>
-  </div>
-  <div class="field" style="display: none">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :order_user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+</div>
+<div id="friendsinvited" style="float:left"> hi </div>
 <% end %>

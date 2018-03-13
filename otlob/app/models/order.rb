@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
 	has_many :items
+	has_many :invitations
 	belongs_to :user
 
 	has_attached_file :menu, styles: { large:"500x500>", medium: "300x300#", thumb: "100x100#" }

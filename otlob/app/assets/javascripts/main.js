@@ -1,5 +1,6 @@
 $(function(){
 	//= Submit the form of find friend action
+	
 	$("#findFriend").submit(function(e){
 		e.preventDefault();
 		fdata = $(this).serialize();
@@ -39,9 +40,14 @@ $(function(){
 		});
 
 	})
-
+	$("#friends").on("click","p",function(e){
+		console.log(e.target)
+	})
 	$("#delFriend").click(function(e){
 		e.preventDefault();
 
 	})
+
+
 })
+
