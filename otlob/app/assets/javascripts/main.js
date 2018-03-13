@@ -19,6 +19,27 @@ $(function(){
 
 	})
 
+	$(".shGroup").click(function(e){
+		$.ajax({
+			url:"/groups/"+$(this).attr('data')+".json",
+			method:"get",
+			success:function(res){
+				$("#grp").prevAll("legend").text(res.name);
+				$.each(res.users, function( index, user ) {
+					console.log(user)
+					htmlTxt = "<div class='col-3-'><img src="+user.avatar_url+">"
+					htmlTxt +="<h3>"+user.name+"</h3>"
+        			htmlTxt += "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/friendships/"+user.id+"'>Remove</a>"
+        			htmlTxt += "</div>"
+        			$("#grp").html($("#grp").html()+htmlTxt)
+
+				})
+
+			}
+		});
+
+	})
+
 	$("#delFriend").click(function(e){
 		e.preventDefault();
 

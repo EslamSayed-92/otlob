@@ -7,7 +7,9 @@
 
 <p>
   <strong>User:</strong>
-  <%= @group.user %>
+  <% for user in @group.users %>
+  <li><%= user.name %></li>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
