@@ -1,4 +1,9 @@
 <p>
+  <strong>Avatar:</strong>
+  <%= image_tag @user.avatar.url(:medium) %>
+</p>
+
+<p>
   <strong>Name:</strong>
   <%= @user.name %>
 </p>
@@ -8,7 +13,8 @@
   <%= @user.email %>
 </p>
 
-<h2>Friends</h2>
+<fieldset>
+<legend>Friend List</legend>
 <ul>
   <% for friendship in @user.friendships %>
     <li>
@@ -17,6 +23,7 @@
     </li>
   <% end %>
 </ul>
+</fieldset>
 
 <p><%= link_to "Find Friends", users_path %></p>
 

@@ -1,29 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Friendships</h1>
+<h1>Friends</h1>
 
-<table>
+<form id="findFriend">
+  <label for="fmail">Your friend email:</label>
+  <input type="email" name="fmail" required="required">
+  <input type="submit" value="Add" name="add">
+</form>
+<table class="table">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Friend</th>
-      <th colspan="3"></th>
+      <th colspan="2">Friend</th>
+      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @friendships.each do |friendship| %>
+     <% for friendship in current_user.friendships %>
       <tr>
-        <td><%= friendship.user_id %></td>
-        <td><%= friendship.friend_id %></td>
-        <td><%= link_to 'Show', friendship %></td>
-        <td><%= link_to 'Edit', edit_friendship_path(friendship) %></td>
-        <td><%= link_to 'Destroy', friendship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= image_tag friendship.friend.avatar.url(:thumb) %></td>
+        <td><%= friendship.friend.name %></td>
+        <td><%= link_to "Un Friend", friendship, :method => :delete, data: { confirm: 'Are you sure?'} %></td>
       </tr>
+
+      
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Friendship', new_friendship_path %>

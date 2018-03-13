@@ -1,7 +1,7 @@
 
-<%= form_with model: @user, local: true do |form| %>
+<%= form_with model: @user, html: { multipart: true }, local: true do |form| %>
 
-<% if @user.errors.any? %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2>
         <%= pluralize(@user.errors.count, "error") %> prohibited
@@ -15,6 +15,11 @@
     </div>
   <% end %>
 
+
+  <p>
+    <%= form.label :avatar %><br>
+    <%= form.file_field :avatar %>
+  </p>
 
   <p>
     <%= form.label :name %><br>

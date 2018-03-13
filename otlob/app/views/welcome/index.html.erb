@@ -1,11 +1,11 @@
-<h1>Welcome</h1>
+<fieldset>
+	<legend>Order List</legend>
+	<% for order in @orders %>
+	<li><%= order.type %>ordered from <%= order.restaurant %> at <%= order.created_at %></li>
+	<% end %>
+</fieldset>
 
-<h1><%= current_user.name %></h1>
-
-
-
+<fieldset>
+	<legend>Friends Activity</legend>
+</fieldset>
 <br/>
-<%if current_user%>
-
-<%= link_to "Log out", destroy_user_session_path, method: "delete" %>
-<%end%>

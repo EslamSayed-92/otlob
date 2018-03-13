@@ -11,7 +11,10 @@ class User < ApplicationRecord
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   # Include default devise modules. Others available are:
-
+  
+  # Include User Image using paperclip
+  has_attached_file :avatar, styles: { large:"500x500>", medium: "300x300#", thumb: "100x100#" }
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
  
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
