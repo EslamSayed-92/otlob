@@ -1,20 +1,18 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Type:</strong>
+  <strong>Order For: </strong>
   <% if @order.mtype == 0 %>
-  	<p>BreakFast</p>
+  	BreakFast
   <% else %>
-  	<p>Lunch</p>
+  	Lunch
   <% end %>
 </p>
-  <strong>Restaurant:</strong>
+  <strong>From Restaurant: </strong>
   <%= @order.restaurant %>
-
 <p>
-  <strong>User:</strong>
-  <%= @order.user_id %>
+  <strong>Ordered By: </strong>
+  <%= User.find(@order.user_id).name %>
 </p>
 
+<%= link_to 'Delete', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to delete the order?'}%> |
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>

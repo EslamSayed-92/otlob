@@ -26,6 +26,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.mtype=params[:mtype]
+    @order.user_id=current_user.id
 
     respond_to do |format|
       if @order.save
@@ -40,14 +41,23 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
-  def update
-    respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+  def update 
+    if @order.user_id == current_user.id
+          respond_to do |format|
+          if @order.update(order_params)
+            format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+            format.json { render :show, status: :ok, location: @order }
+          else
+            format.html { render :edit }
+            format.json { render json: @order.errors, status: :unprocessable_entity }
+          end
+        end
+    else 
+      if user_signed_in?
+        redirect_to order_path(),
+          notice: "Only Owner Who Can Edit The Order"
+      else 
+        redirect_to new_user_session_path
       end
     end
   end
@@ -55,10 +65,19 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
-    @order.destroy
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
+    if @order.user_id == current_user.id
+      @order.destroy
+      respond_to do |format|
+        format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else 
+       if user_signed_in?
+        redirect_to order_path(),
+          notice: "Only Owner Who Can Delete The Order"
+      else 
+        redirect_to new_user_session_path
+      end
     end
   end
 
