@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   root 'welcome#index'
-
+  mount ActionCable.server => '/cable'
 
   # AJAX Routes
   post '/users/find', to: 'users#find'
