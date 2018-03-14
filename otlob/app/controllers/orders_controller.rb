@@ -72,12 +72,8 @@ class OrdersController < ApplicationController
         format.json { head :no_content }
       end
     else 
-       if user_signed_in?
         redirect_to order_path(),
           notice: "Only Owner Who Can Delete The Order"
-      else 
-        redirect_to new_user_session_path
-      end
     end
   end
 
