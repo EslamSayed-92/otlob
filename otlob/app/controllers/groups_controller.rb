@@ -9,6 +9,20 @@ class GroupsController < ApplicationController
     @users = User.all
   end
 
+  #= Function to Remove friend from Group
+  def removeFromGroup
+    @group = Group.find(params[:gid])
+    @friend = User.find(params[:uid])
+    @res = Hash.new
+    if @group.users.delete(@friend)
+      @res = {userfriend: @friend, error: false, message: @friend.name+" removed from "+@group.name+" group" }
+    else
+      @res = {userfriend: @friend, error: true, message: "Unable to remove "+@friend.name+" from "+@group.name+" group" }
+    end
+    render json: @res
+  end
+
+
   # GET /groups/1
   # GET /groups/1.json
   def show
@@ -84,10 +98,6 @@ class GroupsController < ApplicationController
     render json: @res
   end
 
-  #= Function to Remove friend from Group
-  def removeFromGroup
-    p params
-  end
 
   # DELETE /groups/1
   # DELETE /groups/1.json

@@ -17,7 +17,12 @@
       <%= f.label :remember_me %>
     </div>
   <% end -%>
-  <% unless current_user %>
+
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
+<br /> <br />
+    <% unless current_user %>
     <%= link_to user_facebook_omniauth_authorize_path do %>
      <%= image_tag "facebok.png", class: "facebook" %>
     <% end %>
@@ -25,10 +30,6 @@
   <%= link_to "Logout", destroy_user_session_path, method: :delete %>
 <% end %>
 
-<br /> <br />
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
