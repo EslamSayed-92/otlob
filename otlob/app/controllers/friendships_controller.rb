@@ -55,6 +55,7 @@ class FriendshipsController < ApplicationController
 
   def destroy
     @friendship = current_user.friendships.find(params[:id])
+    ActionCable.server.broadcast "uni_brod_#{@friendship.friend_id}_channel" , {type:"friendDelete", Notification: current_user.name+"unfriend you"}
     @friendship.destroy
     redirect_to friendships_url
   end
