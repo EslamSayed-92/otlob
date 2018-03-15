@@ -70,6 +70,9 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
+        @group.users.each do |user|
+          ActionCable.server.broadcast "uni_brod_#{user.id}_channel" , {type:"groupupdated", Notification: current_user.name+" updated a Group named "+@group.name}
+        end
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else

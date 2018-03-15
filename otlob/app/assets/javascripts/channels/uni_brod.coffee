@@ -29,5 +29,6 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
 
 
 
+
   speak: ->
     @perform 'speak'
