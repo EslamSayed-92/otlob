@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   # AJAX Routes
-  post '/users/find', to: 'users#find'
+  post '/friendships/find', to: 'friendships#find'
   post '/groups/addToGroup', to: 'groups#addToGroup'
   post '/groups/removeFromGroup', to: 'groups#removeFromGroup'
 

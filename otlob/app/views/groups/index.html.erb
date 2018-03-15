@@ -6,7 +6,6 @@
 
 <fieldset>
   <legend>Your Groups</legend>
-  <ul>
     <% for grp in current_user.groups %>
       <div class="btn-group">
         <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
@@ -18,7 +17,6 @@
       </div>
       
     <% end %>
-  </ul>
 </fieldset>
 
 <fieldset>
