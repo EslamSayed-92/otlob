@@ -28,8 +28,15 @@ class OrdersController < ApplicationController
     @order.mtype=params[:mtype]
     @order.user_id=current_user.id
 
+
+
     respond_to do |format|
       if @order.save
+        # get all friends ids and send order to them
+        @friends = current_user.friendships.all
+        @friends.each do |friend|
+          ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
+        end
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -41,7 +48,7 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
-  def update 
+  def update
     if @order.user_id == current_user.id
           respond_to do |format|
           if @order.update(order_params)
@@ -52,11 +59,11 @@ class OrdersController < ApplicationController
             format.json { render json: @order.errors, status: :unprocessable_entity }
           end
         end
-    else 
+    else
       if user_signed_in?
         redirect_to order_path(),
           notice: "Only Owner Who Can Edit The Order"
-      else 
+      else
         redirect_to new_user_session_path
       end
     end
@@ -71,11 +78,11 @@ class OrdersController < ApplicationController
         format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
         format.json { head :no_content }
       end
-    else 
+    else
        if user_signed_in?
         redirect_to order_path(),
           notice: "Only Owner Who Can Delete The Order"
-      else 
+      else
         redirect_to new_user_session_path
       end
     end
