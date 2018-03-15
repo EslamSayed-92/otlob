@@ -22,9 +22,9 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
       if data.hasOwnProperty("type")
         alert(data["Notification"])
       if data.hasOwnProperty("email")
-        console.log("sometinhg <sdjisjdahjdas")
         $('#friendshipdiv').append "<p>fatma handle el7ta de</p>"
-      
+
+
 
   speak: ->
     @perform 'speak'
