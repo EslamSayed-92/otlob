@@ -1,4 +1,14 @@
 @import "bootstrap-sprockets";
  @import "bootstrap";
+ @import "style";
  @import "glyphicons";
- @import "style"
+ @import "style";
+
+
+html, body{
+
+.facebook{
+	width:100px;
+	hieght:200px;
+}
+}

@@ -27,6 +27,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.mtype=params[:mtype]
     @order.user_id=current_user.id
+    @order.status=0
 
 
 
