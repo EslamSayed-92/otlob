@@ -21,8 +21,11 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
           </div>"
       if data.hasOwnProperty("type")
         alert(data["Notification"])
-      if data.hasOwnProperty("email")
+      if data.hasOwnProperty("addedToYourFriend")
         $('#friendshipdiv').append "<p>fatma handle el7ta de</p>"
+      if data.hasOwnProperty("adddedToTheGroup")
+        alert("user : "+data.adddedToTheGroup.name+" added to the group")
+
 
 
 
