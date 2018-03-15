@@ -6,6 +6,7 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
+      console.log(data)
       if data.hasOwnProperty("restaurant")
           orderType = ""
           if (data.mtype is 0)
@@ -18,7 +19,12 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
             <p>Ordered By : #{data.user_id} </p>
             <p class=\"date\"> #{data.created_at} ago </p>
           </div>"
-
+      if data.hasOwnProperty("type")
+        alert(data["Notification"])
+      if data.hasOwnProperty("email")
+        console.log("sometinhg <sdjisjdahjdas")
+        $('#friendshipdiv').append "<p>fatma handle el7ta de</p>"
+      
 
   speak: ->
     @perform 'speak'
