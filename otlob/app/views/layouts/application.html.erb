@@ -6,31 +6,35 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   </head>
 
   <body>
-  <nav>
-  <div class="nav-left">
-    <ul>
-      <li><%= link_to 'Home', root_url %></li>  |
-      <li><%= link_to 'Friends', friendships_url %></li> |
-      <li><%= link_to 'Groups', groups_url %></li>  |
-      <li><%= link_to 'Orders', orders_url %></li>
-    </ul>
-  </div>
   
-  <div class="nav-right">
+  <nav class="navbar navbar-inverse">
+  <div class="container-fluid" >
+    <ul  class="ul1">
+      <li><h6><%= link_to 'Home', root_url , id: :h6 %></h6></li> 
+      <li><h6><%= link_to 'Friends', friendships_url ,id: :h6 %></h6></li> 
+      <li><h6><%= link_to 'Groups', groups_url ,id: :h6 %></h6></li>  
+      <li><h6><%= link_to 'Orders', orders_url ,id: :h6 %></h6></li>
+    </ul>
+  
+  
+  
     <% if !current_user.nil? %>
       <%= link_to image_tag(current_user.avatar.url(:thumb)), user_path(current_user) %>
       <%= current_user.name %>
       <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
     <% else %>
-      <%= link_to "Log in", new_user_session_path %>
-      <%= link_to "Sign Up", new_user_registration_path %>
+    <ul class="nav navbar-nav navbar-right">
+      <li><h6><%= link_to "Log in", new_user_session_path ,id: :h6 %></h6></li>
+      <li><h6><%= link_to "Sign Up", new_user_registration_path, id: :h6 %></h6></li>
+      </ul>
     <% end %>
-  </div>
+</div>
   </nav>
-
+</div>
     <%= yield %>
      <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p>
