@@ -1,20 +1,19 @@
-# frozen_string_literal: true
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  def facebook
+  # def facebook
+  #    @user = User.from_omniauth(request.env["omniauth.auth"])
+  #    sign_in_and_redirect @user      
+  # end
+  
+  def sign_in_with(provider_name)
     @user = User.from_omniauth(request.env["omniauth.auth"])
-     sign_in_and_redirect_to root_path
-    
-    if @user.persisted?
-      sign_in_and_redirect @user, :event => :authentication
-      set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
-    else
-      session["devise.facebook_data"] = request.env["omniauth.auth"]
-      redirect_to new_user_registration_url
-    end
-  end
+    sign_in_and_redirect @user, :event => :authentication
+    set_flash_message(:notice, :success, :kind => provider_name) if is_navigational_format?
+end
+def Google
+  sign_in_with "google_oauth2"
+end
 
-  def failure
-    redirect_to root_path,
-          notice: "Only Owner Who Can Edit The Order"
-  end
+def facebook
+  sign_in_with "facebook"
+end
 end
