@@ -1,5 +1,9 @@
-class WelcomeController < ApplicationController
-  before_action :authenticate_user!
+class WelcomeController  < ApplicationController
+  before_action :authenticate_user!, only: [:index]
+def welcome
+	
+end
+
   def index
   	@orders = Order.all.order("created_at DESC").limit(3)
   end

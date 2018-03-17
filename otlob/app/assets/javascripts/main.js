@@ -35,9 +35,16 @@ $(function(){
 				$.each(res.users, function( index, user ) {
 					htmlTxt = "<div id="+user.id+" class='col-3-'><img src="+user.avatar_url+">"
 					htmlTxt +="<strong>"+user.name+"</strong>"
-					htmlTxt += "<button onClick='remFriend(this)' data-confirm='Remove "+user.name+" from "+res.name+" group ?' "
-					htmlTxt += "group_id='"+res.id+"' user_id='"+user.id+"'>"
-        			htmlTxt += "Remove</button></div>"
+					if(res.creator != user.id)
+					{
+						htmlTxt += "<button onClick='remFriend(this)' data-confirm='Remove "+user.name+" from "+res.name+" group ?' "
+						htmlTxt += "group_id='"+res.id+"' user_id='"+user.id+"'>"
+	        			htmlTxt += "Remove</button></div>"
+        			}
+        			else
+        			{
+        				htmlTxt += " <span class='red'>(Group Admin)</span></div>"
+        			}
         			$("#grp").html($("#grp").html()+htmlTxt)
 				})
 
@@ -46,6 +53,9 @@ $(function(){
 
 	})
 
+	$("#friends").on("click","p",function(e){
+		console.log(e.target)
+	})
 	$("#addFriendToGroup").submit(function(e){
 		e.preventDefault();
 		gdata = $(this).serialize();

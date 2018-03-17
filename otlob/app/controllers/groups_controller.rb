@@ -51,6 +51,11 @@ class GroupsController < ApplicationController
       if @group.save
         @group.users.push(current_user)
 
+        @friends = current_user.friendships.all
+        @friends.each do |friend|
+          ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , {type:"groupCreated", Notification: current_user.name+" created a Group named "+@group.name}
+        end
+
         format.html { redirect_to groups_url, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -88,6 +93,8 @@ class GroupsController < ApplicationController
         @added = @group.users.push(@friend)
         if @added
           @res = { error: false, message: @friend.name+" added to "+@group.name+" group" }
+          ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"addToGroup", Notification: current_user.name+" added you to Group named "+@group.name}
+          ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {adddedToTheGroup: @friend}
         else
           @res = { error: true, message: "Unable to add "+@friend.email+" to "+@group.name+" group" }
         end
@@ -102,6 +109,9 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
+    @group.users.each do |user|
+      ActionCable.server.broadcast "uni_brod_#{user.id}_channel" , {type:"groupDestroyed", Notification: current_user.name+" destroyed a Group named "+@group.name}
+    end
     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }

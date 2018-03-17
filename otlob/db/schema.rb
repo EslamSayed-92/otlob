@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314115246) do
-ActiveRecord::Schema.define(version: 20180313122515) do
-ActiveRecord::Schema.define(version: 20180313170400) do
+ActiveRecord::Schema.define(version: 20180314121303) do
 
   create_table "friendships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
@@ -103,9 +101,9 @@ ActiveRecord::Schema.define(version: 20180313170400) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.text "image"
     t.datetime "oauth_token"
     t.datetime "oauth_expires_at"
+    t.text "image"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
