@@ -1,16 +1,25 @@
 p { color: blue;
+
 }
+
 body{
 	background-image: url("");
 	background-repeat: no-repeat;
     background-size: cover;
 }
+
 .loginbox3{
 	background-image: url("yallanotlob2.png");
 	background-repeat: no-repeat;
     background-size: cover;
     height: 550px;
+    display: none;
+
 }
+.ls{
+	padding-right: 520px;
+	padding-top: 320px;
+	}
 
 .loginbox2{
 
@@ -79,7 +88,22 @@ nav{
 	border-radius: 10px;
 
 }
-.loginbox input[type="submit"] ,.log input[type="submit"]
+.orderform input [type="text"] {
+	border:none;
+	border-top:  3px solid #000;
+	border: 3px solid #000;
+	outline:none;
+	height: 40px;
+	color: #000;
+	font-size: 16px;
+	border-radius: 10px;
+
+}
+
+
+
+
+.loginbox input[type="submit"]  ,.log input[type="submit"]
 {
   width: 40%;
   border :none;
@@ -91,12 +115,70 @@ nav{
   border-radius: 20px;
   	
 }
-.loginbox input[type="submit"]:hover
+.orderform input[type="submit"]
+{
+  width: 50%;
+  border :none;
+  outline: none;
+  height: 40px;
+  background:#FF0000;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;	
+}
+h1{
+	 width: 150px;
+  border :none;
+  outline: none;
+  height: 45px;
+  background:#FF0000;
+  color: #fff;
+  
+  border-radius: 20px;
+  text-align: center;
+  	
+}
+
+.h1norder{
+  width: 200px;
+  border :none;
+  outline: none;
+  height: 45px;
+  background:#FF0000;
+  color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 35px;
+  padding-top: 8px;
+  
+}
+.b{
+	
+}
+.borderorder{
+	 border-style: solid;
+    border-width: 4px;
+
+	
+}
+.loginbox input[type="submit"]:hover , h1:hover
 {
 	cursor: pointer;
 	background: #ffc107;
 	color: #000;
 }
+
+#n1{
+	color: #fff;
+	background-color:#FF0000;
+	border-radius: 5px;
+	width: 120px;
+
+}
+.n1{
+	padding-left: 1100px;
+}
+
 .loginbox a{
 	text-decoration: none;
 	font-size: 20 px;
@@ -122,4 +204,87 @@ li {
 }
 .leftnav{
     padding-left: 630px;
+}
+.photo{
+	padding-left: 1100px;
+}
+.ordertable{
+	margin-left: 50px;
+	width: 1000px;
+	border-radius: 3px;
+	border-color: #000;
+	background-color: #fff;
+	border: 2px solid black;
+	border-collapse: collapse solid black;
+
+}
+.h1o{
+	padding-left: 60px;
+}
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{
+	border-top: 2px solid #000 ;
+}
+.orderform{
+    width: 500px;
+	height: 400px;
+	
+	color:#000;
+	top:60%;
+	left:20%;
+	transform: translate(-50%,-50%);
+	box-sizing: border-box;
+	position: absolute;
+	text-align: center;
+}
+.ordrers{
+	top:50%;
+	left:50%;
+}
+.neworder{
+	padding-left: 1100px;
+	margin-top: 10px;
+}   
+.submit{
+	padding-top: 10px;
+	margin-right: 200px;
+	margin-top:20px; 
+}
+h3{
+	margin-top: 10px;
+	font-size: 30px; 
+}
+.backorder{
+
+	margin: 45px;
+}
+#group_name{
+	float: left;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+#g{
+	float: left;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+
+.yourgroup1{
+	padding-left: 700px;
+	padding-top: 10px;
+}
+
+.yourgroup{
+	padding-left: 50px;
+	padding-top: 180px;
+	width:500px;
+}
+button{
+	padding-left: 50px;
+}
+.btn{
+	width:200px;
+	text-align: center;
+	color: #fff;
+	background-color: #000;
+	font-weight: bold;
 }

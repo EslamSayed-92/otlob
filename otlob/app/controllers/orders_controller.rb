@@ -50,23 +50,23 @@ class OrdersController < ApplicationController
     end
   end
 
-  def index
-    respond_to do |format|
-      if @order.save
-        # get all friends ids and send order to them
-        @friends = current_user.friendships.all
-        @friends.each do |friend|
-          ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
-        end
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
-    end
-  end 
-  end
+  # def index
+  #   respond_to do |format|
+  #     if @order.save
+  #       # get all friends ids and send order to them
+  #       @friends = current_user.friendships.all
+  #       @friends.each do |friend|
+  #         ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
+  #       end
+  #       format.html { redirect_to @order, notice: 'Order was successfully created.' }
+  #       format.json { render :show, status: :created, location: @order }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @order.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end 
+   end
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
