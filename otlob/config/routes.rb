@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :items
   resources :orders 
   resources :groups
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :users
   root 'welcome#index'
   get '/ordersList', to: 'orders#ordersList'

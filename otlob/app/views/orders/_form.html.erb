@@ -1,3 +1,5 @@
+
+
 <%= form_with(model: order, local: true) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
@@ -30,26 +32,29 @@
       <%= form.label :'From' %><br />
       <%= form.text_field :restaurant, id: :order_restaurant, required: true%>
     </div>
-    <br /><br />
+    <br />
+
      <div id="friends">
-       <input type="search" name="search" id="fsearch"><br />
-      <label id="fadd"> Add Friend</label>
+     <label id="fadd"> Add Friend</label><br />
+       <input type="search" name="search" id="fsearch">
+      
     </div>
     <br />
+
      <div id="groups">
-     <input type="search" name="search" id="gsearch"><br />
-     <label id="gadd"> Add Group</lael>
-    </div>
-    </div>
+     <label id="gadd"> Add Group</label><br>
+     <input type="search" name="search" id="gsearch">
+     
+ </div>
+ </div>
     <div class="field" style="display: none">
       <%= form.label :user_id %>
       <%= form.text_field :user_id, id: :order_user_id %>
     </div>
 
-    <div class="actions">
+    <div class="actions submit">
       <%= form.submit :submit , id: :addFaG %> 
     </div>
 </div>
-<div id="invitedFriend" style="float:left"> hi </div>
-    
+<div id="invitedFriend" style="float:right"> <h3>Invited Friends</h3> </div> <!-- neeed to e in the center -->
 <% end %>

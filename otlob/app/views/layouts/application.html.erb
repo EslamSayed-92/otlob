@@ -19,21 +19,26 @@
       <li><h6><%= link_to 'Groups', groups_url ,id: :h6 %></h6></li>  
       <li><h6><%= link_to 'Orders', orders_url ,id: :h6 %></h6></li>
     </ul>
-  
+  </div>
+  </nav>
+</div>  
+   <div class="photo">
   
   
     <% if !current_user.nil? %>
       <%= link_to image_tag(current_user.avatar.url(:thumb)), user_path(current_user) %>
       <%= current_user.name %>
       <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
+      </div>
     <% else %>
-    <ul class="nav navbar-nav navbar-right">
+    <div class="ls">
+    <ul class="nav navbar-nav navbar-right" id="lgg">
       <li><h6><%= link_to "Log in", new_user_session_path ,id: :h6 %></h6></li>
       <li><h6><%= link_to "Sign Up", new_user_registration_path, id: :h6 %></h6></li>
       </ul>
     <% end %>
-</div>
-  </nav>
+
+<div class="weelcome">
 </div>
     <%= yield %>
      <p class="notice"><%= notice %></p>

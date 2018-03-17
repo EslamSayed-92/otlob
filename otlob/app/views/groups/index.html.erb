@@ -1,24 +1,38 @@
+<div class="orderform">
 <p id="notice"><%= notice %></p>
 
 <h1>Groups</h1>
 
 <%= render 'form', group: @group %>
+</div>
+<div class="yourgroup">
 
-<fieldset>
+
+
+
   <legend>Your Groups</legend>
+   <div class="btn-group">
     <% for grp in current_user.groups %>
-      <div class="btn-group">
-        <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
+     
+        <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name  %></button>
+
         <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
+
         <% if current_user.id==grp.user_id %>
           <%= link_to '', group_path(grp), method: :delete, data: { confirm: 'Are you sure?' },
          :class => "glyphicon glyphicon-minus"  %>
         <% end %>
-      </div>
-      
+     
+    
     <% end %>
-</fieldset>
+     </div>
 
+
+
+</div>
+
+
+<div class="yourgroup1">
 <fieldset>
   <legend>Group</legend>
   <form id="addFriendToGroup">
@@ -27,10 +41,9 @@
     <input type="hidden" name="group" id="curGrp">
     <input type="submit" value="Add" name="add">
   </form>
-  <div id="grp" >
-   
-  </div>
+
+ 
 </fieldset>
+</div>
 
 
-<br>
