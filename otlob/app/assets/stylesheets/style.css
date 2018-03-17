@@ -13,7 +13,7 @@ body{
 	background-repeat: no-repeat;
     background-size: cover;
     height: 550px;
-    display: none;
+    
 
 }
 .ls{
@@ -269,17 +269,25 @@ h3{
 }
 
 .yourgroup1{
-	padding-left: 700px;
-	padding-top: 10px;
+	padding-left: 650px;
+	
+	float: left;
 }
 
 .yourgroup{
 	padding-left: 50px;
 	padding-top: 180px;
 	width:500px;
+	float: left;
 }
 button{
 	padding-left: 50px;
+}
+#grp{
+
+}
+.newgroup{
+	
 }
 .btn{
 	width:200px;
