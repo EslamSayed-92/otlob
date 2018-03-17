@@ -1,6 +1,6 @@
 $(function(){
 	//= Submit the form of find friend action
-	invitedFriend=[3,5,10]
+	invitedFriend=[]
 
 
 
@@ -74,8 +74,10 @@ $(function(){
 	})
 	friends = $('.temp_information').data('friends')
 	orderId = $('.temp_information').data('orderId')
+
 	$("#fadd").click(function(e){
 		searchTxt = document.getElementById('fsearch').value
+		var flag=0
 		for (var i =0 ; i < Object.keys(friends).length;i++)
 		{
 			for (var key in friends[i])
@@ -83,7 +85,8 @@ $(function(){
 					if(key == 'friend')
 					{
 						if (searchTxt == friends[i][key])
-						{	var id =friends[i]['id']
+						{	flag=1
+							var id =friends[i]['id']
 
 							if (invitedFriend.includes(id))
 								{
@@ -99,6 +102,10 @@ $(function(){
 					}
 					
 				}
+		}
+		if(flag==0)
+		{
+			alert("Kindly note that there is no friends of you with this name")
 		}
 	})
 
@@ -125,6 +132,7 @@ $(function(){
 		}else
 		{
 			e.preventDefault();
+			alert("kindly enter the invitation part")
 		}
 		
 	})

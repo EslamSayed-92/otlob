@@ -47,9 +47,10 @@ class OrdersController < ApplicationController
       respond_to do |format|
       format.html { render :new }
       format.json { render json: @order.errors, status: :unprocessable_entity }
+    end
+  end
 
-
-
+  def index
     respond_to do |format|
       if @order.save
         # get all friends ids and send order to them
