@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   resources :users
   root 'welcome#index'
   get '/ordersList', to: 'orders#ordersList'
+  get '/orderDetails', to: 'orders#orderDetails'
+  get '/finish', to:'orders#finish'
+  get '/cancel', to:'orders#cancel'
   mount ActionCable.server => '/cable'
 
   # AJAX Routes

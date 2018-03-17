@@ -12,7 +12,9 @@
       </ul>
     </div>
   <% end %>
-<%= content_tag :div, class: "temp_information", data: {friends: @friends , orderId: @orderId} do %>
+<%= content_tag :div, class: "temp_information", data: {friends: @friends} do %>
+<% end %>
+<%= content_tag :div, class: "groups", data: {groups: @groups} do %>
 <% end %>
 <div style="float: left;">
     <div class="field">
@@ -45,8 +47,6 @@
      
  </div>
  </div>
-
-
     <div class="field" style="display: none">
       <%= form.label :user_id %>
       <%= form.text_field :user_id, id: :order_user_id %>
@@ -56,6 +56,5 @@
       <%= form.submit :submit , id: :addFaG %> 
     </div>
 </div>
-
-<div id="invitedFriend" style="float:left"> <h3>hi</h3> </div>
+<div id="invitedFriend" style="float:right"> <h3>Invited Friends</h3> </div> <!-- neeed to e in the center -->
 <% end %>

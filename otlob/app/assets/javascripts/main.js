@@ -108,6 +108,11 @@ $(function(){
 			alert("Kindly note that there is no friends of you with this name")
 		}
 	})
+	$('#gadd').click(function(e)
+	{
+		searchTxt = document.getElementById('gsearch').value
+
+	})
 
 	$("#addFaG").click(function(e)
 	{
@@ -169,3 +174,45 @@ $(function(){
     const index = array.indexOf(element);
     array.splice(index, 1);
 }
+	function finish(e,data)
+	{
+		var finish= e.parentNode.parentNode
+		console.log(finish)
+		console.log(data)
+		$.ajax({
+           url: '/finish',
+           method:"get",
+           data: {id: data},
+           /**
+            * Response from your controller
+            */
+           success: function(res) {
+              alert("hi")
+           },
+           errors:function(error)
+           {
+           	alert("error")
+           }
+        });
+	}
+		function cancel(e,data)
+	{
+		var finish= e.parentNode.parentNode
+		console.log(finish)
+		console.log(data)
+		$.ajax({
+           url: '/cancel',
+           method:"get",
+           data: {id: data},
+           /**
+            * Response from your controller
+            */
+           success: function(res) {
+              alert("hi")
+           },
+           errors:function(error)
+           {
+           	alert("error")
+           }
+        });
+	}

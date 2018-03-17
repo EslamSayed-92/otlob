@@ -26,12 +26,15 @@ class OrdersController < ApplicationController
       @friends.push(@friend)
     end
     @friends
+
+    @groups=current_user.groups.all  
   end
 
   # GET /orders/1/edit
   def edit
   end
-
+  def orderDetails
+  end
   # POST /orders
   # POST /orders.json
   def create
@@ -48,6 +51,7 @@ class OrdersController < ApplicationController
       format.html { render :new }
       format.json { render json: @order.errors, status: :unprocessable_entity }
     end
+  end
   end
 
   # def index
@@ -66,7 +70,24 @@ class OrdersController < ApplicationController
   #     end
   #   end
   # end 
-   end
+  # end
+
+  # def index
+  #   respond_to do |format|
+  #     if @order.save
+  #       # get all friends ids and send order to them
+  #       @friends = current_user.friendships.all
+  #       @friends.each do |friend|
+  #         ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
+  #       end
+  #       format.html { redirect_to @order, notice: 'Order was successfully created.' }
+  #       format.json { render :show, status: :created, location: @order }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @order.errors, status: :unprocessable_entity }
+  #     end
+  #   end 
+  # end
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
@@ -92,7 +113,7 @@ class OrdersController < ApplicationController
   end
 
   def ordersList
-    @orders = Order.all.order("created_at DESC").limit(5)
+    @orders = current_user.orders.all.order("created_at DESC").limit(5)
   end
 
   # DELETE /orders/1
@@ -113,7 +134,14 @@ class OrdersController < ApplicationController
       end
     end
   end
-
+  def finish
+    p params[:id]
+    @order = Order.where(id:params[:id]).update_all(status: 1)
+  end
+  def cancel
+    p params[:id]
+    @order = Order.where(id:params[:id]).update_all(status: 2)
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
