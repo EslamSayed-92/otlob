@@ -1,6 +1,9 @@
 $(function(){
 	//= Submit the form of find friend action
-	
+	invitedFriend=[3,5,10]
+
+
+
 	$("#findFriend").submit(function(e){
 		e.preventDefault();
 		fdata = $(this).serialize();
@@ -43,12 +46,6 @@ $(function(){
 
 	})
 
-	$("#friends").on("click","p",function(e){
-		console.log(e.target)
-	})
-	$("#delFriend").click(function(e){ })
-
-
 	$("#addFriendToGroup").submit(function(e){
 		e.preventDefault();
 		gdata = $(this).serialize();
@@ -64,6 +61,62 @@ $(function(){
 					$("#notice").addClass("alert alert-success")
 			}
 		})
+	})
+	friends = $('.temp_information').data('friends')
+	orderId = $('.temp_information').data('orderId')
+	$("#fadd").click(function(e){
+		searchTxt = document.getElementById('fsearch').value
+		for (var i =0 ; i < Object.keys(friends).length;i++)
+		{
+			for (var key in friends[i])
+				{
+					if(key == 'friend')
+					{
+						if (searchTxt == friends[i][key])
+						{	var id =friends[i]['id']
+
+							if (invitedFriend.includes(id))
+								{
+									alert("Kindly note that you can't add the same user twice")
+
+								}else 
+								{
+									console.log(invitedFriend)
+									invitedFriend.push(friends[i]['id'])
+									document.getElementById('invitedFriend').innerHTML+="<span id="+friends[i]['id']+">"+friends[i]['friend']+"<br /> <img src="+friends[i]['avatar']+ "style='hieght:200 px; width:100 px'><p onclick='deletef("+friends[i]['id']+")'>Delete </p></span>"
+								}
+						}
+					}
+					
+				}
+		}
+	})
+
+	$("#addFaG").click(function(e)
+	{
+		if (invitedFriend.length!=0)
+		{
+			friendsArr=invitedFriend.join("")
+			alert("submit function works ")
+			alert("enterd")
+		 	$.ajax({
+		 	      method : 'post',
+		 	      url : '/orders',
+		 	      data: {friends:friendsArr },
+		 	      success: function(result){
+		 	      		console.log(friendsArr)
+		 	      		alert(friendsArr)
+		 	        },
+		 	       errors: function(result)
+		 	       {
+		 	       	alert("error")
+		 	       }
+		 		})
+		}else
+		{
+			e.preventDefault();
+		}
+		
 	})
 
 
@@ -88,5 +141,13 @@ $(function(){
 			}
 		})
 	}
-	
+	function deletef(id)
+	{
+		remove(invitedFriend,id)
+		document.getElementById(id).remove();
+	}
 
+	function remove(array, element) {
+    const index = array.indexOf(element);
+    array.splice(index, 1);
+}

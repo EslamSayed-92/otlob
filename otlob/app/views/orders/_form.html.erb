@@ -10,13 +10,14 @@
       </ul>
     </div>
   <% end %>
-
+<%= content_tag :div, class: "temp_information", data: {friends: @friends , orderId: @orderId} do %>
+<% end %>
 <div style="float: left;">
     <div class="field">
       <%= form.label :menu %><br>
       <%= form.file_field :menu %>
     </div>
-
+    <%= @orderId %>
     <div class="field">
       <%= form.label :'Order For' %><br />
       <input name="mtype" value="0" type="radio"> BreakFast<br/>
@@ -25,13 +26,18 @@
 
     <div class="field">
       <%= form.label :'From' %><br />
-      <%= form.text_field :restaurant, id: :order_restaurant %>
+      <%= form.text_field :restaurant, id: :order_restaurant, required: true%>
     </div>
+    <br /><br />
      <div id="friends">
-      <%= form.label :'Friends' %><br />
-      <% for friendship in current_user.friendships %>
-         <p> <%= friendship.friend.name %> </p>
-      <% end %>
+       <input type="search" name="search" id="fsearch"><br />
+      <label id="fadd"> Add Friend</label>
+    </div>
+    <br />
+     <div id="groups">
+     <input type="search" name="search" id="gsearch"><br />
+     <label id="gadd"> Add Group</lael>
+    </div>
     </div>
     <div class="field" style="display: none">
       <%= form.label :user_id %>
@@ -39,8 +45,8 @@
     </div>
 
     <div class="actions">
-      <%= form.submit %>
+      <%= form.submit :submit , id: :addFaG %> 
     </div>
 </div>
-<div id="friendsinvited" style="float:left"> hi </div>
+<div id="invitedFriend" style="float:left"> hi </div>
 <% end %>

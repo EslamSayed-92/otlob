@@ -1,0 +1,33 @@
+<table style="margin-left:20px ">
+	<tr>
+		<th style="padding-right:40px;""> Order</th>
+		<th style="padding-right:40px">Resturant</th>
+		<th style="padding-right:20px">Invited</th>
+		<th style="padding-right:20px">Joined</th>
+		<th style="padding-right:20px">Status</th>
+		<th style="padding-right:20px">Actions</th>
+	</tr>
+		<% @orders.each do |order|%>
+		   <tr>
+		   		 <% if order.mtype == 0 %>
+				  	<td> BreakFast </td>
+				  <% else %>
+				  	 <td> Lunch </td>
+				  <% end %>
+				  <td><%= order.restaurant %></td>
+				  <td>Invited</td>
+				  <td>Joied</td>
+				  <% if  order.status == 0 %>
+				  	<td> Waiting </td>
+				  	<td><a href="#">View</a>  <a href="#">Finish</a>  <a href="#">Cancel</a></td>
+				  <% elsif order.status == 1 %>
+				  	<td>Finish</td>
+				  	<td><a href="#">View</a></td>
+				  <% else %>
+				  	 <td> Cancel </td>
+				  	 <td><a href="#">View</a></td>
+				  <% end %>    
+		   </tr>
+	   <% end %>
+
+</table>

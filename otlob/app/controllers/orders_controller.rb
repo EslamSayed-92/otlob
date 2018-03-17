@@ -15,6 +15,17 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @orderId = @order.id
+      @friendships = current_user.friendships.all
+      @friends = Array.new
+      @friendships.each do |friendship|
+      @friend = Hash.new
+      @friend[:avatar] = User.find(friendship.friend_id).avatar
+      @friend[:friend] = User.find(friendship.friend_id).name
+      @friend[:id] = friendship.id
+      @friends.push(@friend)
+    end
+    @friends
   end
 
   # GET /orders/1/edit
@@ -24,20 +35,20 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+    p params
     @order = Order.new(order_params)
     @order.mtype=params[:mtype]
     @order.user_id=current_user.id
     @order.status=0
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+    if @order.save
+      data={orderId:@order.id,friends:params}
+      redirect_to @order, notice: 'Order was successfully created.' 
+    else
+      respond_to do |format|
+      format.html { render :new }
+      format.json { render json: @order.errors, status: :unprocessable_entity }
     end
+  end 
   end
 
   # PATCH/PUT /orders/1
@@ -61,6 +72,10 @@ class OrdersController < ApplicationController
         redirect_to new_user_session_path
       end
     end
+  end
+
+  def ordersList
+    @orders = Order.all.order("created_at DESC").limit(5)
   end
 
   # DELETE /orders/1
