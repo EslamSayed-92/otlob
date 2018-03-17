@@ -10,7 +10,9 @@
       </ul>
     </div>
   <% end %>
-<%= content_tag :div, class: "temp_information", data: {friends: @friends , orderId: @orderId} do %>
+<%= content_tag :div, class: "temp_information", data: {friends: @friends} do %>
+<% end %>
+<%= content_tag :div, class: "groups", data: {groups: @groups} do %>
 <% end %>
 <div style="float: left;">
     <div class="field">
@@ -49,4 +51,5 @@
     </div>
 </div>
 <div id="invitedFriend" style="float:left"> hi </div>
+    
 <% end %>

@@ -1,4 +1,4 @@
-<table style="margin-left:20px ">
+<table style="margin-left:20px;margin-top:100px; ">
 	<tr>
 		<th style="padding-right:40px;""> Order</th>
 		<th style="padding-right:40px">Resturant</th>
@@ -14,20 +14,20 @@
 				  <% else %>
 				  	 <td> Lunch </td>
 				  <% end %>
-				  <td><%= order.restaurant %></td>
-				  <td>Invited</td>
-				  <td>Joied</td>
+				  <td><%= order.id %></td>
+				  <td><%= Invitation.where(:order_id=>order.id).count %></t>
+				  <td><%= Invitation.where(:order_id=>order.id,:status => 1).count %></td>
 				  <% if  order.status == 0 %>
 				  	<td> Waiting </td>
-				  	<td><a href="#">View</a>  <a href="#">Finish</a>  <a href="#">Cancel</a></td>
+				  	<td><%= link_to " View ", orderDetails_path %> |  <a href="#" onclick="finish(this,'<%= order.id %>')">Finish</a> | <a href="#" onclick="cancel(this,'<%= order.id %>')">Cancel</a></td>
 				  <% elsif order.status == 1 %>
 				  	<td>Finish</td>
-				  	<td><a href="#">View</a></td>
+				  	<td><%= link_to " View ", orderDetails_path %></td>
 				  <% else %>
 				  	 <td> Cancel </td>
-				  	 <td><a href="#">View</a></td>
+				  	 <td><%= link_to " View ", orderDetails_path %></td>
 				  <% end %>    
 		   </tr>
 	   <% end %>
-
 </table>
+<p><%= link_to 'Start New Order',new_order_path %></p>
