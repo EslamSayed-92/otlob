@@ -7,7 +7,7 @@
   <input type="email" name="fmail" required="required">
   <input type="submit" value="Add" name="add">
 </form>
-<table class="table">
+<table class="table" id="friendshipdiv">
   <thead>
     <tr>
       <th colspan="2">Friend</th>
@@ -23,11 +23,8 @@
         <td><%= link_to "Un Friend", friendship, :method => :delete, data: { confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
-
-
   </tbody>
 </table>
-<div id="friendshipdiv">
-</div>
+
 
 <br>
