@@ -17,11 +17,8 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'glyphicons-rails'
-<<<<<<< HEAD
-gem "font-awesome-rails"
-=======
 
->>>>>>> 2dd14e41f6b4668acefaa533db3a98d800e7ad82
+gem "font-awesome-rails"
 
 gem 'autoprefixer-rails'
 # Use Uglifier as compressor for JavaScript assets

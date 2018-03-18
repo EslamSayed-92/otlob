@@ -83,10 +83,15 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
+<<<<<<< HEAD
 
     font-awesome-rails (4.7.0.3)
       railties (>= 3.2, < 5.2)
 
+=======
+     font-awesome-rails (4.7.0.3)
+      railties (>= 3.2, < 5.2)
+>>>>>>> 939cdf6f3f45ceed30bb9eb3cdaac78f32d76938
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     glyphicons-rails (0.1.2)
@@ -247,9 +252,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   composite_primary_keys (~> 10.0, >= 10.0.3)
   devise
-
   font-awesome-rails
-
   glyphicons-rails
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
