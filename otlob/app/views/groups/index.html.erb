@@ -1,13 +1,19 @@
+<div class="orderform">
 <p id="notice"><%= notice %></p>
 
 <h1>Groups</h1>
 
 <%= render 'form', group: @group %>
+</div>
+<div class="yourgroup">
+
 
 <fieldset>
+
   <legend>Your Groups</legend>
+   <div class="btn-group " style="float: left;">
     <% for grp in current_user.groups %>
-      <div class="btn-group">
+      <div style="float: left;">
         <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
         <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
         <% if current_user.id==grp.user_id %>
@@ -17,8 +23,14 @@
       </div>
 
     <% end %>
+     </div>
 </fieldset>
 
+
+</div>
+
+
+<div class="yourgroup1">
 <fieldset>
   <legend>Group</legend>
   <form id="addFriendToGroup">
@@ -30,7 +42,6 @@
   <div id="grp" >
 
   </div>
+
 </fieldset>
-
-
-<br>
+</div>

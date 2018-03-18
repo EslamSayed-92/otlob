@@ -1,3 +1,5 @@
+
+
 <%= form_with(model: order, local: true) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
@@ -10,13 +12,16 @@
       </ul>
     </div>
   <% end %>
-
+<%= content_tag :div, class: "temp_information", data: {friends: @friends} do %>
+<% end %>
+<%= content_tag :div, class: "groups", data: {groups: @groups} do %>
+<% end %>
 <div style="float: left;">
     <div class="field">
       <%= form.label :menu %><br>
       <%= form.file_field :menu %>
     </div>
-
+    <%= @orderId %>
     <div class="field">
       <%= form.label :'Order For' %><br />
       <input name="mtype" value="0" type="radio"> BreakFast<br/>
@@ -25,22 +30,31 @@
 
     <div class="field">
       <%= form.label :'From' %><br />
-      <%= form.text_field :restaurant, id: :order_restaurant %>
+      <%= form.text_field :restaurant, id: :order_restaurant, required: true%>
     </div>
+    <br />
+
      <div id="friends">
-      <%= form.label :'Friends' %><br />
-      <% for friendship in current_user.friendships %>
-         <p> <%= friendship.friend.name %> </p>
-      <% end %>
+     <label id="fadd"> Add Friend</label><br />
+       <input type="search" name="search" id="fsearch">
+      
     </div>
+    <br />
+
+     <div id="groups">
+     <label id="gadd"> Add Group</label><br>
+     <input type="search" name="search" id="gsearch">
+     
+ </div>
+ </div>
     <div class="field" style="display: none">
       <%= form.label :user_id %>
       <%= form.text_field :user_id, id: :order_user_id %>
     </div>
 
-    <div class="actions">
-      <%= form.submit %>
+    <div class="actions submit">
+      <%= form.submit :submit , id: :addFaG %> 
     </div>
 </div>
-<div id="friendsinvited" style="float:left"> hi </div>
+<div id="invitedFriend" style="float:right"> <h3>Invited Friends</h3> </div> <!-- neeed to e in the center -->
 <% end %>
