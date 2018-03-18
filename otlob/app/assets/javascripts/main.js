@@ -183,9 +183,6 @@ $(function(){
            url: '/finish',
            method:"get",
            data: {id: data},
-           /**
-            * Response from your controller
-            */
            success: function(res) {
               alert("hi")
            },
