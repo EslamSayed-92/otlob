@@ -18,12 +18,25 @@
       <li><h6><%= link_to 'Friends', friendships_url ,id: :h6 %></h6></li> 
       <li><h6><%= link_to 'Groups', groups_url ,id: :h6 %></h6></li>  
       <li><h6><%= link_to 'Orders', orders_url ,id: :h6 %></h6></li>
+      <li>
+</div></li>
+
+ </li>
     </ul>
   </div>
   </nav>
 </div>  
    <div class="photo">
-  
+   <div class="btn-group">
+  <button type="button" class="dropdown-toggle fa fa-bell-o h5" data-toggle="dropdown" aria-hidden="true" style="float: right;padding: 0px !important;"> 
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Action</a><br>
+    <a class="dropdown-item" href="#">Another action</a><br>
+    <a class="dropdown-item" href="#">Something else here</a><br>
+    <div class="dropdown-divider"></div><br>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div></div>
   
     <% if !current_user.nil? %>
       <%= link_to image_tag(current_user.avatar.url(:thumb)), user_path(current_user) %>
