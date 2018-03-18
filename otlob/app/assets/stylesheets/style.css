@@ -16,6 +16,16 @@ body{
     
 
 }
+.photo55{
+	background-image: url("yallanotlob2.png");
+	background-repeat: no-repeat;
+    background-size: cover;
+    height: 550px;
+}
+h4{
+	float: left;
+	padding-left: 3px;
+}
 .ls{
 	padding-right: 520px;
 	padding-top: 320px;
@@ -23,7 +33,7 @@ body{
 
 .loginbox2{
 
-    background-image: url("white-wood-horizontal-sml-.jpg");
+    background-image: url("/yallanotlob2.png");
 	background-repeat: no-repeat;
     background-size: cover;
    
@@ -139,7 +149,7 @@ h1{
   	
 }
 
-.h1norder{
+ .h1norder{
   width: 200px;
   border :none;
   outline: none;
@@ -148,12 +158,42 @@ h1{
   color: #fff;
   border-radius: 20px;
   text-align: center;
-  margin-left: 35px;
+  margin-left: 10px;
   padding-top: 8px;
   
 }
-.b{
-	
+.btn2 , #browse ,button , #addFaG {
+  width: 100px;
+  border :none;
+  outline: none;
+  height: 30px;
+  background:#FF0000;
+  color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 10px;
+
+ 
+}
+
+#r{
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	background-color: #FF0000;
+	font-size: 20px; 
+}
+.h2norder{
+  width: 300px;
+  border :none;
+  outline: none;
+  height: 45px;
+  background:#FF0000;
+  color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 10px;
+  
 }
 .borderorder{
 	 border-style: solid;
@@ -161,7 +201,7 @@ h1{
 
 	
 }
-.loginbox input[type="submit"]:hover , h1:hover
+.loginbox input[type="submit"]:hover , h1:hover , button:hover
 {
 	cursor: pointer;
 	background: #ffc107;
@@ -225,16 +265,18 @@ li {
 	border-top: 2px solid #000 ;
 }
 .orderform{
-    width: 500px;
-	height: 400px;
-	
+   
 	color:#000;
-	top:60%;
-	left:20%;
-	transform: translate(-50%,-50%);
 	box-sizing: border-box;
 	position: absolute;
 	text-align: center;
+	width:600px;
+	padding-left: 40px;
+}
+#group_name{
+	float: left;
+	border: 3px solid black;
+	border-radius: 8px;
 }
 .ordrers{
 	top:50%;
@@ -288,12 +330,7 @@ h3{
 button{
 	padding-left: 50px;
 }
-#grp{
 
-}
-.newgroup{
-
-}
 .btn{
 	width:200px;
 	text-align: center;
@@ -302,13 +339,18 @@ button{
 	font-weight: bold;
 }
 
-.orderlist{
-    top:30%;
-    left: 30%;
-
+.friendsactivity, .orderlist{
+    
+    color: #000;
+    border: 3px solid black;
+    padding:10px;
 
 }
-.friendsactivity{
-    top:30%;
-    left: 70%;
+
+.no{
+	padding: 10px;
+	background: #fff;
+	border: 3px solid black;
+	float: left;
+
 }
