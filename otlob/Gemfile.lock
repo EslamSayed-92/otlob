@@ -245,6 +245,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   composite_primary_keys (~> 10.0, >= 10.0.3)
   devise
+    font-awesome-rails
   glyphicons-rails
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
