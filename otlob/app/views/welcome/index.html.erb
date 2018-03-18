@@ -1,0 +1,28 @@
+
+<div class="orderlist">
+<fieldset>
+	<legend>Order List</legend>
+		<% @orders.each do |order|%>
+		<div id="ordershereTest">
+			<div class="post_wrapper">
+				<% if order.mtype == 0 %>
+				  	BreakFast
+				<% else %>
+				  	Lunch
+				<% end %>
+				From : <%= order.restaurant %>
+				<p> Ordered By :<%= User.find(order.user_id).name%>
+				 ...<%=  time_ago_in_words(order.created_at) %> ago</p>
+				<%= link_to "Show", order_path(order.id) %>
+			</div>
+		</div>
+		<% end %>
+</fieldset>
+</div>
+
+<div class="friendsactivity">
+<fieldset>
+	<legend>Friends Activity</legend>
+</fieldset>
+</div>
+<br/>

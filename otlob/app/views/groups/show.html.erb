@@ -1,0 +1,18 @@
+<div class="orderform">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @group.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <% for user in @group.users %>
+  <li><%= user.name %></li>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>
+</div>
