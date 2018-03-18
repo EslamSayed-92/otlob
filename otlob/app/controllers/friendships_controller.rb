@@ -18,7 +18,7 @@ class FriendshipsController < ApplicationController
 
   #= Function to find friend from Add Friend form
   def find
-    @friend = User.where(email: params[:fmail]).take
+    @friend = User.where(email: params[:fmail].downcase).take
     @res = Hash.new
     if @friend.present?
       if check_if_self @friend.id

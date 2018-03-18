@@ -1,5 +1,8 @@
-p { color: blue;
-
+p.label { 
+	color: blue;
+	font-weight: bold;
+	display: inline;
+	font-size: 18px;
 }
 
 body{
@@ -127,7 +130,7 @@ nav{
 }
 .orderform input[type="submit"]
 {
-  width: 50%;
+  width: auto !important;
   border :none;
   outline: none;
   height: 40px;
@@ -250,7 +253,7 @@ li {
 }
 .ordertable{
 	margin-left: 50px;
-	width: 1000px;
+	width: 80%;
 	border-radius: 3px;
 	border-color: #000;
 	background-color: #fff;
@@ -265,7 +268,6 @@ li {
 	border-top: 2px solid #000 ;
 }
 .orderform{
-   
 	color:#000;
 	box-sizing: border-box;
 	position: absolute;
@@ -311,9 +313,8 @@ h3{
 }
 
 .yourgroup1{
-	padding-left: 650px;
-	
-	float: left;
+	margin-left: 2%;
+	display: inline-block;
 }
 
 .friendship{
@@ -339,6 +340,30 @@ button{
 	font-weight: bold;
 }
 
+input[type="file"]
+{
+	display: inline;
+}
+#invitedFriend{
+	display: none;
+	text-align: center;
+	float: right;
+	display: inline-block;
+	max-width: 80%;
+	border: 1px solid black;
+}
+
+.orderlist{
+    top:30%;
+    left: 30%;
+
+
+}
+
+#groups,#friends{
+	margin-bottom: 1%;
+}
+
 .friendsactivity, .orderlist{
     
     color: #000;
@@ -352,8 +377,6 @@ button{
 	background: #fff;
 	border: 3px solid black;
 	float: left;
-
-
 }
 .h5{
 	padding-left: 500px;

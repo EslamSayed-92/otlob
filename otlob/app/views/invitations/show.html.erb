@@ -1,0 +1,37 @@
+<p class="label">Order For: </p>
+<% if @order.mtype == 0 %>
+	BreakFast
+<% else %>
+	Lunch
+<% end %>
+<br/>
+<p class="label">From Restaurant: </p>
+<%= @order.restaurant %>
+<br><br><br>
+<div id='invite'>
+    <input type="hidden" value="<%= @order.id %>" name="order">
+    <input list="myfriends" id='fsearch' name="friend" required="true">
+    <datalist id="myfriends">
+      <% for f in @friends %>
+        <option value="<%= f[:friend] %>" data-id="<%= f[:id] %>" data-avatar="<%= f[:avatar] %>">
+      <% end %>
+    </datalist>
+
+    <button id="fadd"> Add Friend</button>
+  <br />
+
+   <div id="groups">
+   <input list="mygroups" id='gsearch' name="group" required="true">
+    <datalist id="mygroups">
+      <% for g in @groups %>
+        <option value="<%= g.name %>" data-id="<%= g.id %>" >
+      <% end %>
+    </datalist>
+   <button id="gadd"> Add Group</button>
+  </div>
+
+</div>
+
+<%= link_to 'Cancel', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to Cancel the order?'}%> <% if @order.status == 0 %> |
+<%= link_to 'Edit', edit_order_path(@order) %> 
+<% end %> 

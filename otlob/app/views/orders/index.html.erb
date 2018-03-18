@@ -6,7 +6,7 @@
 <h1>Orders</h1>
 </div>
 <table class="table ordertable">
-  
+
     <tr>
       <th>Type</th>
       <th>Restaurant</th>
@@ -18,20 +18,22 @@
   
     <% @orders.each do |order| %>
       <tr>
-        <td>  <% if order.mtype == 0 %>
+        <td>  <% if order[:order].mtype == 0 %>
                 <p>BreakFast</p>
               <% else %>
                 <p>Lunch</p>
               <% end %>
         </td>
-        <td><%= order.restaurant %></td>
-        <td><%= order.user_id %></td>
-        <td><%= link_to 'Show', order %> | </td>
-        <% if order.status == 0 %>
-         <td><%= link_to 'Edit', edit_order_path(order) %> |</td>
-        <% end %>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
+        <td><%= order[:order].restaurant %></td>
+        <td><%= order[:user] %></td>
+        <td><%= link_to 'Show', order %> </td>
+        <td><%= link_to 'Edit', edit_order_path(order[:order]) %> </td>
+        <% if current_user.id==order[:order].user_id %>
+        <td>
+          <%= link_to 'Delete', order_path(order[:order]), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+        <% end %>
       </tr>
     <% end %>
  

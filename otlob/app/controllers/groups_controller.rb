@@ -83,7 +83,7 @@ class GroupsController < ApplicationController
 
   #= Function to Add friend To Group from Add Friend form
   def addToGroup
-    @friend = User.where(email: params[:fmail]).take
+    @friend = User.where(email: params[:fmail].downcase).take
     @group = Group.find(params[:group])
     @res = Hash.new
     if @friend.present?
