@@ -16,6 +16,7 @@
       <div style="float: left;">
         <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
 
+
        <!--
         <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
 -->
@@ -29,6 +30,12 @@
          :class => "fa fa-times"  %>
 
         
+
+
+        <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
+        <% if current_user.id==grp.user_id %>
+          <%= link_to '', group_path(grp), method: :delete, data: { confirm: 'Are you sure?' },
+         :class => "glyphicon glyphicon-minus"  %>
 
         <% end %>
       </div>

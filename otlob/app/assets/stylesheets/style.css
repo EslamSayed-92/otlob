@@ -273,9 +273,11 @@ h3{
 	
 	float: left;
 }
+
 .friendship{
 	padding-left: 50px;
 }
+
 
 .yourgroup{
 	padding-left: 50px;
@@ -299,6 +301,7 @@ button{
 	background-color: #000;
 	font-weight: bold;
 }
+
 .orderlist{
     top:30%;
     left: 30%;
