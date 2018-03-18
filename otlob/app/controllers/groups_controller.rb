@@ -15,6 +15,8 @@ class GroupsController < ApplicationController
     @friend = User.find(params[:uid])
     @res = Hash.new
     if @group.users.delete(@friend)
+      ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {RemoveFromYourGroup: @friend}
+      ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"ReomvedFromGroup", Notification: current_user.name+" Removed you from group"+@group.name}
       @res = {userfriend: @friend, error: false, message: @friend.name+" removed from "+@group.name+" group" }
     else
       @res = {userfriend: @friend, error: true, message: "Unable to remove "+@friend.name+" from "+@group.name+" group" }
@@ -94,7 +96,7 @@ class GroupsController < ApplicationController
         if @added
           @res = { error: false, message: @friend.name+" added to "+@group.name+" group" }
           ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"addToGroup", Notification: current_user.name+" added you to Group named "+@group.name}
-          ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {adddedToTheGroup: @friend}
+          ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {adddedToTheGroup: @friend,group: @group}
         else
           @res = { error: true, message: "Unable to add "+@friend.email+" to "+@group.name+" group" }
         end
