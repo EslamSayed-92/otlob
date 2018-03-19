@@ -1,3 +1,5 @@
+<div id="notice" class="alert"><%= notice %></div>
+
 <%= form_with(model: order, local: true) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
@@ -11,36 +13,56 @@
     </div>
   <% end %>
 
-<div style="float: left;">
-    <div class="field">
-      <%= form.label :menu %><br>
+  <div style="float: left;">
+    <div class="field" id="menu">
+      <%= form.label :menu %>
       <%= form.file_field :menu %>
     </div>
 
     <div class="field">
-      <%= form.label :'Order For' %><br />
-      <input name="mtype" value="0" type="radio"> BreakFast<br/>
-      <input name="mtype" value="1" type="radio" checked="checked"> Lunch <br/>
+      <%= form.label :'Order For:' %>
+      <input name="mtype" value="0" type="radio" required="required"> BreakFast
+      <input name="mtype" value="1" type="radio" required="required"> Lunch <br/>
     </div>
 
     <div class="field">
-      <%= form.label :'From' %><br />
-      <%= form.text_field :restaurant, id: :order_restaurant %>
-    </div>
-     <div id="friends">
-      <%= form.label :'Friends' %><br />
-      <% for friendship in current_user.friendships %>
-         <p> <%= friendship.friend.name %> </p>
-      <% end %>
-    </div>
-    <div class="field" style="display: none">
-      <%= form.label :user_id %>
-      <%= form.text_field :user_id, id: :order_user_id %>
-    </div>
 
-    <div class="actions">
-      <%= form.submit %>
+      <%= form.label :'From' %>
+      <%= form.text_field :restaurant, id: :order_restaurant, required: true%>
     </div>
+      <br>
+
+  <div id="friends">
+  <input list="myfriends" id='fsearch' name="friend" required="true">
+  <datalist id="myfriends">
+    <% for f in @friends %>
+      <option value="<%= f[:friend] %>" data-id="<%= f[:id] %>">
+    <% end %>
+  </datalist>
+  <button id="fadd"> Add Friend</button>
+  </div>
+
+  <div id="groups">
+   <input list="mygroups" id='gsearch' name="group" required="true">
+    <datalist id="mygroups">
+      <% for g in @groups %>
+        <option value="<%= g.name %>" data-id="<%= g.id %>" >
+      <% end %>
+    </datalist>
+   <button id="gadd"> Add Group</button>
+  </div>
+  <div class="actions submit">
+    <%= form.submit :'publish' , id: :addOrder %> 
+  </div>
 </div>
-<div id="friendsinvited" style="float:left"> hi </div>
+
+
 <% end %>
+
+<div class="container">
+   <div class="row">
+    <div class=" col-sm-4">
+    <div id="invitedFriend" class="h2norder" style="float:right"> <h3>Invited Friends</h3> </div> <!-- neeed to e in the center -->
+    </div>
+  </div>
+</div>

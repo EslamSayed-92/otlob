@@ -1,18 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
 <p>
   <strong>Order For: </strong>
-  <% if @order.mtype == 0 %>
+  <%if @res[:order].mtype == 0 %>
   	BreakFast
   <% else %>
   	Lunch
   <% end %>
 </p>
-  <strong>From Restaurant: </strong>
-  <%= @order.restaurant %>
 <p>
-  <strong>Ordered By: </strong>
-  <%= User.find(@order.user_id).name %>
+  <strong>From Restaurant: </strong>
+  <%= @res[:order].restaurant %>
 </p>
 
-<%= link_to 'Delete', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to delete the order?'}%> |
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<div id="notice" class="alert"><%= notice %></div>
+
+<h3><u>Invitations</u></h3>
+<table class="table">
+  <tr>
+    <th>Invited</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  <% for invited in @res[:users] %>
+    <tr>
+      <td><%= invited.user.name %></td>
+      <td>
+        <%if invited.status == 0 %>
+          invited
+        <% elsif invited.status == 1 %>
+          joined
+        <% elsif invited.status == 2 %>
+          refused
+        <% end %>
+      </td>
+      <td>
+        <a data-confirm ='Are you sure you would like to uninvite '+<%= invited.user.name %>+' ?' data="<%= invited.id %>" class='uninvite'>
+          Un invite
+        </a>
+      </td>
+    </tr>
+  <% end %>  
+</table>
+
+
+
+<% if @order.status == 0  and @order.user_id == current_user.id %> 
+<%= link_to 'Delete', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to delete the order?'}%>  | 
+<%= link_to 'Edit', edit_order_path(@order) %> 
+<% end %> 
+
+</div>
+</div>
+</div>

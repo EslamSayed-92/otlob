@@ -1,36 +1,46 @@
+
+<div class="ordrers">
+
 <p id="notice"><%= notice %></p>
-
+<div class="h1o">
 <h1>Orders</h1>
+</div>
+<table class="table ordertable">
 
-<table>
-  <thead>
     <tr>
       <th>Type</th>
       <th>Restaurant</th>
       <th>User</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+ 
 
-  <tbody>
+  
     <% @orders.each do |order| %>
       <tr>
-        <td>  <% if order.mtype == 0 %>
+        <td>  <% if order[:order].mtype == 0 %>
                 <p>BreakFast</p>
               <% else %>
                 <p>Lunch</p>
               <% end %>
         </td>
-        <td><%= order.restaurant %></td>
-        <td><%= order.user_id %></td>
-        <td><%= link_to 'Show', order %> | </td>
-        <td><%= link_to 'Edit', edit_order_path(order) %> | </td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <td><%= order[:order].restaurant %></td>
+        <td><%= order[:user] %></td>
+        <td><%= link_to 'Show', order %> </td>
+        <td><%= link_to 'Edit', edit_order_path(order[:order]) %> </td>
+        <% if current_user.id==order[:order].user_id %>
+        <td>
+          <%= link_to 'Delete', order_path(order[:order]), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+        <% end %>
       </tr>
     <% end %>
-  </tbody>
+ 
 </table>
 
 <br>
-
-<%= link_to 'New Order', new_order_path %>
+</div>
+<div class="n1">
+<h2><%= link_to 'New Order', new_order_path , id: :n1 %></h2>
+</div>

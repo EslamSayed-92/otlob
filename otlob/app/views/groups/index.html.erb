@@ -1,38 +1,50 @@
+
+<div class="orderform">
 <p id="notice"><%= notice %></p>
 
 <h1>Groups</h1>
 
 <%= render 'form', group: @group %>
+</div>
 
-<fieldset>
+<div class="container">
+   <div class="row">
+
+<div class=" col-sm-6" style="float: left;">
+<div class="yourgroup">
   <legend>Your Groups</legend>
-  <ul>
+   <div class="btn-group " >
     <% for grp in current_user.groups %>
-      <div class="btn-group">
+      <div>
         <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
-        <button class="shGroup glyphicon glyphicon-plus" data="<%= grp.id %>"></button>
+
+        <i class="fa fa-user-plus shGroup glyphicon glyphicon-plus" data="<%= grp.id %>" aria-hidden="true"></i>
+        
         <% if current_user.id==grp.user_id %>
           <%= link_to '', group_path(grp), method: :delete, data: { confirm: 'Are you sure?' },
-         :class => "glyphicon glyphicon-minus"  %>
-        <% end %>
+         :class => "fa fa-times"  %>
+         <% end %>
       </div>
-      
-    <% end %>
-  </ul>
-</fieldset>
 
+    <% end %>
+     </div>
+     </div>
+     </div>
+
+<div class=" col-sm-6">
 <fieldset>
   <legend>Group</legend>
   <form id="addFriendToGroup">
     <label for="fmail">Your friend email:</label>
     <input type="email" name="fmail" required="required">
     <input type="hidden" name="group" id="curGrp">
-    <input type="submit" value="Add" name="add">
+    <input class="btn2" type="submit" value="Add" name="add">
   </form>
   <div id="grp" >
-   
+
   </div>
+
 </fieldset>
-
-
-<br>
+</div>
+</div>
+</div>

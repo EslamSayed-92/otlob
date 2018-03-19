@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
-	has_many :items
-	has_many :invitations
+	has_many :items, dependent: :destroy
+	has_many :invitations, dependent: :destroy
 	belongs_to :user
 	after_create_commit { BroadcastMessageJob.perform_later self }
 	has_attached_file :menu, styles: { large:"500x500>", medium: "300x300#", thumb: "100x100#" }

@@ -1,22 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+
+<div class="orderlist">
+
 <fieldset>
-	<legend>Order List</legend>
+	<legend class="h1norder">Order List</legend>
 		<% @orders.each do |order|%>
-			<div class="post_wrapper"  id="ordershereTest">
+		<div id="ordershereTest">
+			<div class="post_wrapper">
 				<% if order.mtype == 0 %>
-				  	BreakFast 
+				  	<h4>BreakFast</h4>
 				<% else %>
-				  	Lunch 
+				  	<h4>Lunch</h4>
 				<% end %>
-				From : <%= order.restaurant %>
-				<p> Ordered By :<%= User.find(order.user_id).name%>
-				 ...<%=  time_ago_in_words(order.created_at) %> ago</p>
-				<%= link_to "Show", order_path(order.id) %>
+				<h4>From :</h4><h4> <%= order.restaurant %></h4></br></br>
+				<h4> Ordered By :</h4><h4><%= User.find(order.user_id).name%></h4>
+				 ...<h4><%=  time_ago_in_words(order.created_at) %></h4> <h4>ago</h4>
+				 </br><br><h4>
+				<%= link_to "Show", order_path(order.id) %></h4></br></br>
 			</div>
+		</div>
 		<% end %>
 </fieldset>
 
+</div>
+</div>
+<div class="col-sm-6">
+<div class="friendsactivity">
 <fieldset>
-	<legend>Friends Activity</legend>
+	<legend class="h1norder">Friends Activity</legend>
 </fieldset>
+</div>
+
+</div>
+</div>
+
 
 <br/>
