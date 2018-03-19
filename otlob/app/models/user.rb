@@ -2,8 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook,:google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable,:omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
+   
   has_and_belongs_to_many :groups
   has_many :friendships
   has_many :invitations
@@ -15,7 +15,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   
   # Include User Image using paperclip
-  has_attached_file :avatar, styles: { large:"500x500>", medium: "300x300#", thumb: "100x100#" }, default_url: "/assets/missing.png" 
+  has_attached_file :avatar, styles: { large:"500x500>", medium: "300x300#", thumb: "100x100#" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
  
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -29,15 +29,7 @@ class User < ApplicationRecord
    validates :email, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
     message: "please enter valid email" }
 
-  # def self.new_with_session(params, session)
-  #   super.tap do |user|
-  #     if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-  #       user.email = data["email"] if user.email.blank?
-  #     end
-  #   end
-  # end
-
-  def self.from_omniauth(auth)
+    def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
        user.password = Devise.friendly_token[0,20]
@@ -45,27 +37,19 @@ class User < ApplicationRecord
       # user.image = auth.info.image # assuming the user model has an image
     end
   end
-
-  def generate_password_token!
-    self.reset_password_token = generate_token
-    self.reset_password_sent_at = Time.now.utc
-    save!
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
   end
+  def send_password_reset
+  generate_token(:password_reset_token)
+  self.password_reset_sent_at = Time.zone.now
+  save!
+  UserMailer.password_reset(self).deliver
+end
 
-  def password_token_valid?
-    (self.reset_password_sent_at + 4.hours) > Time.now.utc
-  end
 
-  def reset_password!(password)
-    self.reset_password_token = nil
-    self.password = password
-    save!
-  end
 
-  private
-
-  def generate_token
-    SecureRandom.hex(10)
-  end
 
 end

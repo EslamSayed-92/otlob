@@ -15,8 +15,6 @@ class GroupsController < ApplicationController
     @friend = User.find(params[:uid])
     @res = Hash.new
     if @group.users.delete(@friend)
-      ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {RemoveFromYourGroup: @friend}
-      ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"ReomvedFromGroup", Notification: current_user.name+" Removed you from group"+@group.name}
       @res = {userfriend: @friend, error: false, message: @friend.name+" removed from "+@group.name+" group" }
     else
       @res = {userfriend: @friend, error: true, message: "Unable to remove "+@friend.name+" from "+@group.name+" group" }
@@ -53,11 +51,6 @@ class GroupsController < ApplicationController
       if @group.save
         @group.users.push(current_user)
 
-        @friends = current_user.friendships.all
-        @friends.each do |friend|
-          ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , {type:"groupCreated", Notification: current_user.name+" created a Group named "+@group.name}
-        end
-
         format.html { redirect_to groups_url, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -83,7 +76,7 @@ class GroupsController < ApplicationController
 
   #= Function to Add friend To Group from Add Friend form
   def addToGroup
-    @friend = User.where(email: params[:fmail].downcase).take
+    @friend = User.where(email: params[:fmail]).take
     @group = Group.find(params[:group])
     @res = Hash.new
     if @friend.present?
@@ -95,8 +88,6 @@ class GroupsController < ApplicationController
         @added = @group.users.push(@friend)
         if @added
           @res = { error: false, message: @friend.name+" added to "+@group.name+" group" }
-          ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"addToGroup", Notification: current_user.name+" added you to Group named "+@group.name}
-          ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {adddedToTheGroup: @friend,group: @group}
         else
           @res = { error: true, message: "Unable to add "+@friend.email+" to "+@group.name+" group" }
         end
@@ -111,9 +102,6 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
-    @group.users.each do |user|
-      ActionCable.server.broadcast "uni_brod_#{user.id}_channel" , {type:"groupDestroyed", Notification: current_user.name+" destroyed a Group named "+@group.name}
-    end
     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }

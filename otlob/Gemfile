@@ -9,7 +9,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
 # Use mysql as the database for Active Record
-# gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'composite_primary_keys', '~> 10.0', '>= 10.0.3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -17,8 +17,6 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'glyphicons-rails'
-
-gem "font-awesome-rails"
 
 gem 'autoprefixer-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -41,9 +39,7 @@ gem 'devise'
 # gem 'capistrano-rails', group: :development
 # Use Paper Clip for image attachment
 gem "paperclip", "~> 5.2.1"
-# Facebook login
 gem 'omniauth-facebook'
-#google+ login
 gem "omniauth-google-oauth2", "~> 0.2.1"
 
 group :development, :test do
@@ -63,12 +59,5 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-group :development, :test do
-  gem 'mysql2', '>= 0.3.18', '< 0.5'
-end
-
-group :production do
-  gem 'pg'
-end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
