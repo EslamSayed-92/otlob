@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_groups_friends, only: [:new, :edit]
-
-
   # GET /orders
   # GET /orders.json
   @@invitedFriends = Array.new
@@ -90,6 +88,7 @@ class OrdersController < ApplicationController
         else
           @@invitedFriends.push(user.id)
           @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
+
         end
         @result.push(@res)
       end
@@ -102,6 +101,7 @@ class OrdersController < ApplicationController
       else
         @@invitedFriends.push(user.id)
         @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
+
       end
       render json: @res
     end
@@ -127,9 +127,7 @@ class OrdersController < ApplicationController
     @order.mtype=params[:mtype]
     @order.user_id=current_user.id
     @order.status = 0
-
     @result = Hash.new
-
     respond_to do |format|
       if @order.save
         @result[:order] = @order
@@ -139,10 +137,16 @@ class OrdersController < ApplicationController
           @res = inviteToOrder(@order,@friend)
           if !@res[:error]
             @result[:users].push(@res[:user])
-            ActionCable.server.broadcast "uni_brod_#{@res[:user].id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
           end
         end
-
+        @userFriends = @current_user.friendships.all
+        @userFriends.each do |f|
+        ActionCable.server.broadcast "uni_brod_#{f.friend_id}_channel" , @order
+        end
+        @usersInsideOrder = @order.invitations.all
+        @usersInsideOrder.each do |u|
+        ActionCable.server.broadcast "uni_brod_#{u.user_id}_channel" , {Notification: current_user.name+" invited yo to an order named "+@order.restaurant,orderId: @order.id }
+        end
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -151,7 +155,25 @@ class OrdersController < ApplicationController
       end
     end
   end
-  
+
+  # def index
+  #   respond_to do |format|
+  #     if @order.save
+  #       # get all friends ids and send order to them
+  #       @friends = current_user.friendships.all
+  #       @friends.each do |friend|
+  #         ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
+  #       end
+  #       format.html { redirect_to @order, notice: 'Order was successfully created.' }
+  #       format.json { render :show, status: :created, location: @order }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @order.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+  # end
+
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
@@ -179,6 +201,28 @@ class OrdersController < ApplicationController
     @orders = current_user.orders.all.order("created_at DESC").limit(5)
   end
 
+  # DELETE /orders/1
+  # DELETE /orders/1.json
+  def destroy
+    p "helloFromDestroy"
+    @usersInsideOrder = @order.invitations.all
+    if @order.user_id == current_user.id
+      @usersInsideOrder.each do |user|
+        ActionCable.server.broadcast "uni_brod_#{user.user_id}_channel" , {type:"orderDestroyed", Notification: current_user.name+" Destroyed a order named "+@order.restaurant}
+      end
+      @order.destroy
+      respond_to do |format|
+        format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+       if user_signed_in?
+        redirect_to order_path(), notice: "Only Owner Who Can Delete The Order"
+      else
+        redirect_to new_user_session_path
+      end
+    end
+  end
 
   def finish
     p params[:id]
@@ -242,7 +286,6 @@ class OrdersController < ApplicationController
 
           if @invitation.save
             @res = { error: false, user: @friend }
-            ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
           else
             @res = { error: true, message: "Unable to invite "+@friend.name+" to order" }
           end

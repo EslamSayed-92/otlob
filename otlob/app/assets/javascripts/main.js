@@ -101,7 +101,7 @@ $(function(){
 			e.preventDefault();
 			alert("kindly enter the invitation part")
 		}
-		
+
 	})
 
 
@@ -134,7 +134,7 @@ $(function(){
 				success:function(res){
 					$("#orderId").val(res.id);
 					invitedFriend=[]
-					invitedGroups=[]	
+					invitedGroups=[]
 				}
 			})
 		}
@@ -145,7 +145,7 @@ $(function(){
 		e.preventDefault();
 		searchTxt = $('#fsearch').val()
 		var flag=0
-		
+
 		$.each($("#myfriends").children(),function(ind,elem){
 			fname = $(elem).val()
 			fid = $(elem).attr("data-id")
@@ -357,7 +357,7 @@ $(function(){
 		})
 	}
 
-	
+
 
 	function finish(e,data)
 	{

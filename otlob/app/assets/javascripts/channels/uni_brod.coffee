@@ -19,9 +19,14 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
             <p>Ordered By : #{data.user_id} </p>
             <p class=\"date\"> #{data.created_at} ago </p>
           </div>"
+      if data.hasOwnProperty("orderId")
+
+        $("#numOfNotifi").val(parseInt($("#numOfNotifi").val()) + 1)
+        $("#notificationsOfUser").prepend "<a href=\"http://localhost:3000/orders/#{data.orderId}\" data-method=\"get\">#{data["Notification"]}</a>"
+        $("#dropDownBtn").css 'background', 'purple'
       if data.hasOwnProperty("type")
-        $("#notificationsOfUser").prepend "<a>#{data["Notification"]}</a>"
-        $("#myDropDownBtn").css 'background', 'black'
+          $("#notificationsOfUser").prepend "<a>#{data["Notification"]}</a>"
+          $("#dropDownBtn").css 'background', 'purple'
       if data.hasOwnProperty("addedToYourFriend")
         $('#friendshipdiv').append "
         <tbody>
