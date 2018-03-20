@@ -31,9 +31,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @@invitedFriends = Array.new
-    @id = Order.last[:id]
     @order = Order.new
-    @orderId = @id+1
       @friendships = current_user.friendships.all
       @friends = Array.new
       @friendships.each do |friendship|
@@ -180,6 +178,8 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
+    p params
+    @order =  Order.find(params[:id])
     if @order.user_id == current_user.id
       @order.destroy
       respond_to do |format|
