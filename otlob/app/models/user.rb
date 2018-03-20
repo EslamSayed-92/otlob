@@ -2,8 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook,:google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable,:omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
+         
   has_and_belongs_to_many :groups
   has_many :friendships
   has_many :invitations
@@ -45,27 +45,4 @@ class User < ApplicationRecord
       # user.image = auth.info.image # assuming the user model has an image
     end
   end
-
-  def generate_password_token!
-    self.reset_password_token = generate_token
-    self.reset_password_sent_at = Time.now.utc
-    save!
-  end
-
-  def password_token_valid?
-    (self.reset_password_sent_at + 4.hours) > Time.now.utc
-  end
-
-  def reset_password!(password)
-    self.reset_password_token = nil
-    self.password = password
-    save!
-  end
-
-  private
-
-  def generate_token
-    SecureRandom.hex(10)
-  end
-
 end

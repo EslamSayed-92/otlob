@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_groups_friends, only: [:new, :edit]
 
+
   # GET /orders
   # GET /orders.json
   @@invitedFriends = Array.new
@@ -52,6 +53,25 @@ class OrdersController < ApplicationController
 
 
   def orderDetails
+  end
+
+  # DELETE /orders/1
+  # DELETE /orders/1.json
+  def destroy
+    if @order.user_id == current_user.id
+      @order.destroy
+      respond_to do |format|
+        format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+       if user_signed_in?
+        redirect_to order_path(),
+          notice: "Only Owner Who Can Delete The Order"
+      else
+        redirect_to new_user_session_path
+      end
+    end
   end
 
   # POST /orders
@@ -211,10 +231,12 @@ class OrdersController < ApplicationController
     p params[:id]
     @order = Order.where(id:params[:id]).update_all(status: 1)
   end
+
   def cancel
     p params[:id]
     @order = Order.where(id:params[:id]).update_all(status: 2)
   end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order

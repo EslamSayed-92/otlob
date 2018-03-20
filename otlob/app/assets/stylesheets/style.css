@@ -399,3 +399,17 @@ color: #FFF;
 .btn-no{
 cursor: default !important;
 }
+.navbar{
+vertical-align: middle;
+}
+.white{
+color:#FFF;
+}
+ul{
+margin-top: 5px !important;
+}
+.fa-bell-o{
+margin-right: 15%;
+float: right;
+padding: 5px !important;
+}

@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 20180320020635) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.text "image"
     t.string "provider"
     t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
