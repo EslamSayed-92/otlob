@@ -28,8 +28,8 @@
         <td><%= order[:order].restaurant %></td>
         <td><%= order[:user] %></td>
         <td><%= link_to 'Show', order[:order] %> </td>
-        <td><%= link_to 'Edit', edit_order_path(order[:order]) %> </td>
         <% if current_user.id==order[:order].user_id %>
+        <td><%= link_to 'Edit', edit_order_path(order[:order]) %> </td>   
         <td>
           <%= link_to 'Delete', order_path(order[:order]), method: :Delete, data: { confirm: 'Are you sure?' } %>
         </td>

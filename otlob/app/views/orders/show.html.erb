@@ -14,6 +14,11 @@
       <%= @res[:order].restaurant %>
     </p>
 
+    <p>
+      <strong>Ordered By: </strong>
+      <%= User.find(@res[:order].user_id).name %>
+    </p>
+
     <div id="notice" class="alert"><%= notice %></div>
   </div>
 </div>

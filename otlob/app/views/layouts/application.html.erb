@@ -18,6 +18,33 @@
         <li><h6><%= link_to 'Groups', groups_url ,id: :h6 %></h6></li>
         <li><h6><%= link_to 'Orders', orders_url ,id: :h6 %></h6></li>
       </ul>
+
+      <% if !current_user.nil? %>
+        <div class="btn-group">
+          <button type="button" class="dropdown-toggle fa fa-bell-o h5" data-toggle="dropdown" aria-hidden="true" style="float: right;padding: 0px !important;">
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a><br>
+            <a class="dropdown-item" href="#">Another action</a><br>
+            <a class="dropdown-item" href="#">Something else here</a><br>
+            <div class="dropdown-divider"></div><br>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </div>
+  <!-- class="photo" -->
+       <div>
+        <%= link_to image_tag(current_user.avatar.url(:thumb)), user_path(current_user) %>
+        <%= current_user.name %>
+        <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
+        </div>
+      <% else %>
+        <div class="ls">
+        <ul class="nav navbar-nav navbar-right" id="lgg">
+          <li><h6><%= link_to "Log in", new_user_session_path ,id: :h6 %></h6></li>
+          <li><h6><%= link_to "Sign Up", new_user_registration_path, id: :h6 %></h6></li>
+          </ul>
+      <% end %>
+
     </div>
     </nav>
   <% end %>
@@ -43,8 +70,6 @@
       </ul>
     <% end %>
 
-<div class="weelcome">
-</div>
     <%= yield %>
      <!-- <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p> -->

@@ -21,8 +21,16 @@
 
   <div class="field">
     <%= form.label :'Order For: ' %>
-    <input name="mtype" value="0" type="radio" required="required"> BreakFast
-    <input name="mtype" value="1" type="radio" required="required"> Lunch
+    <% if @order.mtype == 0 %>
+      <%= form.radio_button :mtype, '0', require: "required", checked: true %> BreakFast
+      <%= form.radio_button :mtype, '1', require: "required" %> Lunch
+    <% elsif @order.mtype == 1 %>
+      <%= form.radio_button :mtype, '0', require: "required" %> BreakFast
+      <%= form.radio_button :mtype, '1', require: "required", checked: true %> Lunch
+    <% else %>
+      <%= form.radio_button :mtype, '0', require: "required" %> BreakFast
+      <%= form.radio_button :mtype, '1', require: "required" %> Lunch
+    <% end %>
   </div>
 
   <div class="field">
