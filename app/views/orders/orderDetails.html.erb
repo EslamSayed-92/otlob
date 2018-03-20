@@ -1,0 +1,23 @@
+<% @items = @order.items.all %>
+<%= render :template => 'items/index.html.erb', :locals => {:@items => @items} %>
+<form>
+<table>
+	<tr>
+		<th>Item</th>
+		<th>Amount</th>
+		<th>Price</th>
+		<th>Comment</th>
+	</tr>
+	<tr>
+		<td><input type="text" name="" id='item'></td>
+		<td><input type="number" name="" id='amount'></td>
+		<td><input type="number" name="" id='price'></td>
+		<td><input type="text" name="" id="comment"></td>
+		
+	</tr>
+</table>
+	  <input type="submit" id="submit">
+
+	<input type="text" name="" id="order" value= "<%= @order.id %>" >
+	<input type="text" name="" id="user" value="<%= current_user.id %>">
+</form>

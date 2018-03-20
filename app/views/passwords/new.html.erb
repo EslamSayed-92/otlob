@@ -1,0 +1,15 @@
+<h2>Forgot your password?</h2>
+
+<%= form_with(model: @user, url: passwords_forgot_path, html: { method: :post }) do |f| %>
+  <p id="notice"><%= notice %></p>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Send me reset password instructions" %>
+  </div>
+<% end %>
+
