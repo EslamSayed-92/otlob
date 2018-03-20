@@ -33,22 +33,13 @@ class OrdersController < ApplicationController
   def new
     @@invitedFriends = Array.new
     @order = Order.new
-    #   @friendships = current_user.friendships.all
-    #   @friends = Array.new
-    #   @friendships.each do |friendship|
-    #   @friend = Hash.new
-    #   @friend[:friend] = User.find(friendship.friend_id).name
-    #   @friend[:id] = friendship.friend_id
-    #   @friends.push(@friend)
-    # end
-    # @friends
-
-    # @groups=current_user.groups.all  
   end
 
   # GET /orders/1/edit
   def edit
   end
+
+  
   def orderDetails
   end
 
@@ -194,6 +185,7 @@ class OrdersController < ApplicationController
       end
     end
   end
+
   def finish
     p params[:id]
     @order = Order.where(id:params[:id]).update_all(status: 1)
