@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_groups_friends, only: [:new, :edit]
 
+
   # GET /orders
   # GET /orders.json
   @@invitedFriends = Array.new
@@ -39,8 +40,27 @@ class OrdersController < ApplicationController
   def edit
   end
 
-  
+
   def orderDetails
+  end
+
+  # DELETE /orders/1
+  # DELETE /orders/1.json
+  def destroy
+    if @order.user_id == current_user.id
+      @order.destroy
+      respond_to do |format|
+        format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+       if user_signed_in?
+        redirect_to order_path(),
+          notice: "Only Owner Who Can Delete The Order"
+      else
+        redirect_to new_user_session_path
+      end
+    end
   end
 
   # POST /orders
@@ -122,23 +142,6 @@ class OrdersController < ApplicationController
   end
   end
 
-  # def index
-  #   respond_to do |format|
-  #     if @order.save
-  #       # get all friends ids and send order to them
-  #       @friends = current_user.friendships.all
-  #       @friends.each do |friend|
-  #         ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
-  #       end
-  #       format.html { redirect_to @order, notice: 'Order was successfully created.' }
-  #       format.json { render :show, status: :created, location: @order }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @order.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end 
-  # end
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
@@ -167,33 +170,16 @@ class OrdersController < ApplicationController
     @orders = current_user.orders.all.order("created_at DESC").limit(5)
   end
 
-  # DELETE /orders/1
-  # DELETE /orders/1.json
-  def destroy
-    if @order.user_id == current_user.id
-      @order.destroy
-      respond_to do |format|
-        format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    else
-       if user_signed_in?
-        redirect_to order_path(),
-          notice: "Only Owner Who Can Delete The Order"
-      else
-        redirect_to new_user_session_path
-      end
-    end
-  end
-
   def finish
     p params[:id]
     @order = Order.where(id:params[:id]).update_all(status: 1)
   end
+
   def cancel
     p params[:id]
     @order = Order.where(id:params[:id]).update_all(status: 2)
   end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
