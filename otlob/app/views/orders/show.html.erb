@@ -28,38 +28,9 @@
 </div>
 
 <div class="row">
-<form>
-<h3><u>Order Details</u></h3>
-<table class="table">
-  <tr>
-    <th>Person</th>
-    <th>Item</th>
-    <th>Amount</th>
-    <th>Price</th>
-    <th>Comment</th>
-  </tr>
-  <% for invited in @res[:users] %>
-    <tr>
-      <td><%= invited.user.name %></td>
-      <td>
-        <%if invited.status == 0 %>
-          invited
-        <% elsif invited.status == 1 %>
-          joined
-        <% elsif invited.status == 2 %>
-          refused
-        <% end %>
-      </td>
-      <td>
-      </td>
-    </tr>
-  <% end %>  
-</table>
-</div>
-
-<div class="row">
-
-<table class="table table-condensed" id='det'>
+  <h3><u>Order Details</u></h3>
+<div class="col-sm-7"> 
+<table class="table table-striped" id='det'>
   <tr>
     <th>Name</th>
     <th>Price</th>
@@ -70,8 +41,28 @@
   <% @items = @order.items.all %>
   <%= render :template => 'items/index.html.erb', :locals => {:@items => @items} %>
 </table>
+</div>
 
-<%= form_with(model: @res[:item], local: true) do |form| %>
+<div class="col-sm-4">
+  <a id='invFriends'><%= @order.invitations.where(status: 0).count %> friends invited</a><br/>
+  <a id='joinFriends'><%= @order.invitations.where(status: 1).count %> friends joined</a>
+  <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="title"></h4>
+      </div>
+    <div class="modal-content">
+      <div class="modal-body" id="body">
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+<%= form_with(model: @res[:item], local: true, id: :itemForm) do |form| %>
 <table class="table-condensed" style="margin-top: 5%">
   <tr>
     <th><%= form.label :name %></th>

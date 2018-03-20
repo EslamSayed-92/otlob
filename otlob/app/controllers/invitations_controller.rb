@@ -30,6 +30,26 @@ class InvitationsController < ApplicationController
 	  end
 	end
 
+	def orderDetails
+		@order= Order.find(params[:order])
+		@inv = Array.new
+		if params[:which] == 'invited'
+			@inv = @order.invitations.where(status: 0)
+		elsif params[:which] == 'joined'
+			@inv = @order.invitations.where(status: 1)
+		end
+
+		@users = Array.new
+		for i in @inv
+			@temp = Hash.new 
+			@user = User.find(i.user_id)
+			@temp[:id] = @user.id
+			@temp[:name] = @user.name
+			@temp[:avatar] = @user.avatar.url(:thumb)
+			@users.push(@temp)
+		end
+		render json: @users
+	end	
 
 	private
 	    # Use callbacks to share common setup or constraints between actions.

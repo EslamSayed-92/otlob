@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   post '/groups/removeFromGroup', to: 'groups#removeFromGroup'
   post '/invitation', to:'invitations#invit'
   post '/addfriend', to: 'invitations#create'
-
+  get '/invitations/invFriends', to: 'invitations#orderDetails'
 
   delete '/invitations/:id', to:'invitations#destroy'
   post '/orders/invite', to: 'orders#invite'

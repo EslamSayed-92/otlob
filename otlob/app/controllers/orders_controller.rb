@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
   @@invitedFriends = Array.new
   def index
     @all = current_user.orders.all
+    @invites = current_user.invitations.all
     @orders = Array.new
     for order in @all
       out = Hash.new
@@ -13,6 +14,14 @@ class OrdersController < ApplicationController
       out[:user] = User.find(order.user_id).name
       @orders.push(out)
     end
+
+    for inv in @invites
+      out = Hash.new
+      out[:order] = Order.find(inv.order_id)
+      out[:user] = User.find(inv.user_id).name
+      @orders.push(out)
+    end
+    
     @orders
   end
 

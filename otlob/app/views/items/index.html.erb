@@ -5,6 +5,10 @@
     <td><%= item.price %></td>
     <td><%= item.amount %></td>
     <td><%= item.comment %></td>
-    <td><%= link_to 'Edit', edit_item_path(item) %> | <%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if item.user_id == current_user.id %>
+      <td><%= link_to 'Edit', edit_item_path(item) %> | <%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% else %>
+      <td></td>
+    <% end %>
   </tr>
 <% end %>
