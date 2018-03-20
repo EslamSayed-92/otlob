@@ -20,13 +20,7 @@
     <%= f.submit "Log in" %>
   </div>
 
-    <% unless current_user %>
-    <%= link_to user_facebook_omniauth_authorize_path do %>
-     <%= image_tag "facebok.png", class: "facebook" %>
-    <% end %>
-<% else %>
-  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-<% end %>
+    
 
 <% end %>
 

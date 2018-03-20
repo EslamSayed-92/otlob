@@ -9,8 +9,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in_and_redirect @user, :event => :authentication
     set_flash_message(:notice, :success, :kind => provider_name) if is_navigational_format?
 end
-def Google
-  sign_in_with "google_oauth2"
+def google_oauth2
+  sign_in_with "Google"
 end
 
 def facebook
