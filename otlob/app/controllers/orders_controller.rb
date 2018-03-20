@@ -142,8 +142,8 @@ class OrdersController < ApplicationController
           end
         end
         @userFriends = @current_user.friendships.all
-        @userFriends.each do |friend|
-        ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , {type:"orderCreated", Notification: current_user.name+" Create a order named "+@order.restaurant}
+        @userFriends.each do |f|
+        ActionCable.server.broadcast "uni_brod_#{f.friend_id}_channel" , @order
         end
         @usersInsideOrder = @order.invitations.all
         @usersInsideOrder.each do |u|
