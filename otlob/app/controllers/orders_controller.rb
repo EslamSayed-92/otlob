@@ -1,11 +1,12 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_groups_friends, only: [:new, :edit]
 
   # GET /orders
   # GET /orders.json
   @@invitedFriends = Array.new
   def index
-    @all = Order.all
+    @all = current_user.orders.all
     @orders = Array.new
     for order in @all
       out = Hash.new
@@ -31,20 +32,18 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @@invitedFriends = Array.new
-    @id = Order.last[:id]
     @order = Order.new
-    @orderId = @id+1
-      @friendships = current_user.friendships.all
-      @friends = Array.new
-      @friendships.each do |friendship|
-      @friend = Hash.new
-      @friend[:friend] = User.find(friendship.friend_id).name
-      @friend[:id] = friendship.friend_id
-      @friends.push(@friend)
-    end
-    @friends
+    #   @friendships = current_user.friendships.all
+    #   @friends = Array.new
+    #   @friendships.each do |friendship|
+    #   @friend = Hash.new
+    #   @friend[:friend] = User.find(friendship.friend_id).name
+    #   @friend[:id] = friendship.friend_id
+    #   @friends.push(@friend)
+    # end
+    # @friends
 
-    @groups=current_user.groups.all  
+    # @groups=current_user.groups.all  
   end
 
   # GET /orders/1/edit
@@ -207,6 +206,20 @@ class OrdersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
+    end
+
+    # Gets the groups and friends of current user before creating or editing order
+    def set_groups_friends
+      @friendships = current_user.friendships.all
+        @friends = Array.new
+        @friendships.each do |friendship|
+        @friend = Hash.new
+        @friend[:friend] = User.find(friendship.friend_id).name
+        @friend[:id] = friendship.friend_id
+        @friends.push(@friend)
+      end
+      @friends
+      @groups=current_user.groups.all 
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
