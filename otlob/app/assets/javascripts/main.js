@@ -192,6 +192,36 @@ $(function(){
 			$("#notice").text("Kindly note that there is no friends of you with this name");
 		}
 	})
+	// add item to order
+	$("#submit").click (function()
+	{
+		Item= $("#item").val()
+		Amount= $("#amount").val()
+		Price= $("#price").val()
+		Comment= $("#comment").val()
+		User= $("#user").val()
+		Order=$("#order").val()
+		console.log($("#item").empty())
+		if ($.isEmptyObject(Item)||$.isEmptyObject(Price))
+		{
+			alert("The item, price and amount can't be left blank")
+		}else
+		{
+			console.log("intered")
+			$.ajax({
+		       url: '/createitem',
+		       method:"post",
+		       data: {item:Item,price:Price,comment:Comment,user:User,order:Order,amount:Amount},
+		       success: function(res) {
+		        alert("Enter")
+		       },
+		       errors:function(error)
+		       {
+		       		alert("error")
+		       }
+		     });
+		}
+	 })
 
 	//= invite group to oreder click function
 	$('#gadd').click(function(e){
