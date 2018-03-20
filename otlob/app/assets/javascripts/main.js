@@ -108,7 +108,7 @@ $(function(){
 	//= Create Order function
 	$("#addOrder").click(function(e){
 		e.preventDefault();
-		mtype = $("input[name='mtype']:checked").val();
+		mtype = $("input[name='order[mtype]']:checked").val();
 		restaurant = $("#order_restaurant").val(); 
 		if(mtype == undefined){
 			$("#notice").removeClass("alert alert-success")
@@ -342,7 +342,8 @@ $(function(){
            }
         });
 	}
-		function cancel(e,data)
+	
+	function cancel(e,data)
 	{
 		var finish= e.parentNode.parentNode
 		console.log(finish)
