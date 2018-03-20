@@ -139,14 +139,14 @@ class OrdersController < ApplicationController
             @result[:users].push(@res[:user])
           end
         end
-        @userFriends = @current_user.friendships.all
-        @userFriends.each do |f|
-        ActionCable.server.broadcast "uni_brod_#{f.friend_id}_channel" , @order
-        end
-        @usersInsideOrder = @order.invitations.all
-        @usersInsideOrder.each do |u|
-        ActionCable.server.broadcast "uni_brod_#{u.user_id}_channel" , {Notification: current_user.name+" invited yo to an order named "+@order.restaurant,orderId: @order.id }
-        end
+        #@userFriends = @current_user.friendships.all
+        #@userFriends.each do |f|
+        #ActionCable.server.broadcast "uni_brod_#{f.friend_id}_channel" , @order
+        #end
+        #@usersInsideOrder = @order.invitations.all
+        #@usersInsideOrder.each do |u|
+        #ActionCable.server.broadcast "uni_brod_#{u.user_id}_channel" , {Notification: current_user.name+" invited yo to an order named "+@order.restaurant,orderId: @order.id }
+        #end
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -205,11 +205,11 @@ class OrdersController < ApplicationController
   # DELETE /orders/1.json
   def destroy
     p "helloFromDestroy"
-    @usersInsideOrder = @order.invitations.all
+    #@usersInsideOrder = @order.invitations.all
     if @order.user_id == current_user.id
-      @usersInsideOrder.each do |user|
-        ActionCable.server.broadcast "uni_brod_#{user.user_id}_channel" , {type:"orderDestroyed", Notification: current_user.name+" Destroyed a order named "+@order.restaurant}
-      end
+      #@usersInsideOrder.each do |user|
+        #ActionCable.server.broadcast "uni_brod_#{user.user_id}_channel" , {type:"orderDestroyed", Notification: current_user.name+" Destroyed a order named "+@order.restaurant}
+      #end
       @order.destroy
       respond_to do |format|
         format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
