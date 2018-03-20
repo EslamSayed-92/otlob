@@ -20,7 +20,8 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
             <p class=\"date\"> #{data.created_at} ago </p>
           </div>"
       if data.hasOwnProperty("type")
-        alert(data["Notification"])
+        $("#notificationsOfUser").prepend "<a>#{data["Notification"]}</a>"
+        $("#myDropDownBtn").css 'background', 'black'
       if data.hasOwnProperty("addedToYourFriend")
         $('#friendshipdiv').append "
         <tbody>
@@ -38,7 +39,7 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
           <button onclick=\"remFriend(this)\" data-confirm=\"Remove ahmed from helloWorld group? \" group_id=\"#{data.group.id}\" user_id=\"#{data.adddedToTheGroup.id}\">Remove</button></div>
           "
       if data.hasOwnProperty("RemoveFromYourGroup")
-        alert("user : "+data.RemoveFromYourGroup.name+" Removed from the group")
+          $("#notificationsOfUser").prepend  "<a> user : #{data.RemoveFromYourGroup.name} Removed from the group</a>"
 
   speak: ->
     @perform 'speak'
