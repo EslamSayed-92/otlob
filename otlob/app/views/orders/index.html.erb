@@ -13,9 +13,9 @@
       <th>User</th>
       <th colspan="3"></th>
     </tr>
- 
 
-  
+
+
     <% @orders.each do |order| %>
       <tr>
         <td>  <% if order[:order].mtype == 0 %>
@@ -31,14 +31,14 @@
         <td><%= link_to 'Edit', edit_order_path(order[:order]) %> </td>
         <% if current_user.id==order[:order].user_id %>
         <td>
-          <%= link_to 'Delete', order_path(order[:order]), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Delete', order_path(order[:order]), method: :Delete, data: { confirm: 'Are you sure?' } %>
         </td>
         <% else %>
           <td></td>
         <% end %>
       </tr>
     <% end %>
- 
+
 </table>
 
 <h2 style="float:right"><%= link_to 'New Order', new_order_path , id: :n1 %></h2>
