@@ -34,6 +34,17 @@ class OrdersController < ApplicationController
   def new
     @@invitedFriends = Array.new
     @order = Order.new
+      @friendships = current_user.friendships.all
+      @friends = Array.new
+      @friendships.each do |friendship|
+      @friend = Hash.new
+      @friend[:friend] = User.find(friendship.friend_id).name
+      @friend[:id] = friendship.friend_id
+      @friends.push(@friend)
+    end
+    @friends
+
+    @groups=current_user.groups.all
   end
 
   # GET /orders/1/edit
@@ -77,7 +88,7 @@ class OrdersController < ApplicationController
         if @@invitedFriends.include? user.id
           @res = { error: true, message: user.name+" is already invited to order" }
         else
-          @@invitedFriends.push(user.id)   
+          @@invitedFriends.push(user.id)
           @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
         end
         @result.push(@res)
@@ -89,7 +100,7 @@ class OrdersController < ApplicationController
       if @@invitedFriends.include? user.id
         @res = { error: true, message: user.name+" is already invited to order" }
       else
-        @@invitedFriends.push(user.id)   
+        @@invitedFriends.push(user.id)
         @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
       end
       render json: @res
@@ -140,9 +151,7 @@ class OrdersController < ApplicationController
       end
     end
   end
-  end
-
-
+  
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
@@ -169,6 +178,7 @@ class OrdersController < ApplicationController
   def ordersList
     @orders = current_user.orders.all.order("created_at DESC").limit(5)
   end
+
 
   def finish
     p params[:id]
@@ -197,7 +207,7 @@ class OrdersController < ApplicationController
         @friends.push(@friend)
       end
       @friends
-      @groups=current_user.groups.all 
+      @groups=current_user.groups.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -229,7 +239,7 @@ class OrdersController < ApplicationController
           @invitation.order = @order
           @invitation.user = @friend
           @invitation.status = 0
-          
+
           if @invitation.save
             @res = { error: false, user: @friend }
             ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
@@ -242,4 +252,4 @@ class OrdersController < ApplicationController
       end
       return @res
     end
-
+  end
