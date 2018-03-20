@@ -33,7 +33,6 @@ class OrdersController < ApplicationController
   def new
     @@invitedFriends = Array.new
     @order = Order.new
-    @orderId = @id+1
       @friendships = current_user.friendships.all
       @friends = Array.new
       @friendships.each do |friendship|
@@ -71,6 +70,7 @@ class OrdersController < ApplicationController
         else
           @@invitedFriends.push(user.id)
           @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
+
         end
         @result.push(@res)
       end
@@ -83,6 +83,7 @@ class OrdersController < ApplicationController
       else
         @@invitedFriends.push(user.id)
         @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
+
       end
       render json: @res
     end
@@ -108,9 +109,7 @@ class OrdersController < ApplicationController
     @order.mtype=params[:mtype]
     @order.user_id=current_user.id
     @order.status = 0
-
     @result = Hash.new
-
     respond_to do |format|
       if @order.save
         @result[:order] = @order
@@ -120,8 +119,15 @@ class OrdersController < ApplicationController
           @res = inviteToOrder(@order,@friend)
           if !@res[:error]
             @result[:users].push(@res[:user])
-            ActionCable.server.broadcast "uni_brod_#{@res[:user].id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
           end
+        end
+        @userFriends = @current_user.friendships.all
+        @userFriends.each do |friend|
+        ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , {type:"orderCreated", Notification: current_user.name+" Create a order named "+@order.restaurant}
+        end
+        @usersInsideOrder = @order.invitations.all
+        @usersInsideOrder.each do |u|
+        ActionCable.server.broadcast "uni_brod_#{u.user_id}_channel" , {type:"orderInvitation", Notification: current_user.name+" invited yo to an order named "+@order.restaurant}
         end
 
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -131,7 +137,6 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
-  end
   end
 
   # def index
@@ -183,7 +188,11 @@ class OrdersController < ApplicationController
   # DELETE /orders/1.json
   def destroy
     p "helloFromDestroy"
+    @usersInsideOrder = @order.invitations.all
     if @order.user_id == current_user.id
+      @usersInsideOrder.each do |user|
+        ActionCable.server.broadcast "uni_brod_#{user.user_id}_channel" , {type:"orderDestroyed", Notification: current_user.name+" Destroyed a order named "+@order.restaurant}
+      end
       @order.destroy
       respond_to do |format|
         format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
@@ -258,7 +267,6 @@ class OrdersController < ApplicationController
 
           if @invitation.save
             @res = { error: false, user: @friend }
-            ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
           else
             @res = { error: true, message: "Unable to invite "+@friend.name+" to order" }
           end
@@ -268,3 +276,4 @@ class OrdersController < ApplicationController
       end
       return @res
     end
+  end

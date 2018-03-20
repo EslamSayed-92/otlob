@@ -101,15 +101,16 @@ $(function(){
 			e.preventDefault();
 			alert("kindly enter the invitation part")
 		}
-		
+
 	})
 
 
 	//= Create Order function
 	$("#addOrder").click(function(e){
 		e.preventDefault();
-		mtype = $("input[name='mtype']:checked").val();
-		restaurant = $("#order_restaurant").val(); 
+		mtype = $("input[name='order[mtype]']:checked").val();
+		restaurant = $("#order_restaurant").val();
+		console.log(mtype)
 		if(mtype == undefined){
 			$("#notice").removeClass("alert alert-success")
 			$("#notice").addClass("alert alert-warning")
@@ -134,7 +135,7 @@ $(function(){
 				success:function(res){
 					$("#orderId").val(res.id);
 					invitedFriend=[]
-					invitedGroups=[]	
+					invitedGroups=[]
 				}
 			})
 		}
@@ -145,7 +146,7 @@ $(function(){
 		e.preventDefault();
 		searchTxt = $('#fsearch').val()
 		var flag=0
-		
+
 		$.each($("#myfriends").children(),function(ind,elem){
 			fname = $(elem).val()
 			fid = $(elem).attr("data-id")
@@ -322,7 +323,7 @@ $(function(){
 		})
 	}
 
-	
+
 
 	function finish(e,data)
 	{

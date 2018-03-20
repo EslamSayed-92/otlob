@@ -1,6 +1,6 @@
 <div class="container" style="margin-top: 5%;">
 
-<div class="col-sm-6"> 
+<div class="col-sm-6">
 <%= form_with(model: order, local: true) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-  
+
   <div class="field" id="menu">
     <%= form.label :menu %>
     <%= form.file_field :menu %>
@@ -28,7 +28,7 @@
       <%= form.radio_button :mtype, '0', require: "required" %> BreakFast
       <%= form.radio_button :mtype, '1', require: "required", checked: true %> Lunch
     <% else %>
-      <%= form.radio_button :mtype, '0', require: "required" %> BreakFast
+      <%= form.radio_button :mtype, '0', require: "required", checked: true %> BreakFast
       <%= form.radio_button :mtype, '1', require: "required" %> Lunch
     <% end %>
   </div>
@@ -59,7 +59,7 @@
   </div>
 
   <div class="actions submit">
-    <%= form.submit :'publish' , id: :addOrder, :class =>'btn2' %> 
+    <%= form.submit :'publish' , id: :addOrder, :class =>'btn2' %>
   </div>
 
   <div id="notice" class="alert"><%= notice %></div>
@@ -72,7 +72,3 @@
   </div>
 
 </div>
-
-
-
-

@@ -21,7 +21,7 @@ App.uni_brod = App.cable.subscriptions.create "UniBrodChannel",
           </div>"
       if data.hasOwnProperty("type")
         $("#notificationsOfUser").prepend "<a>#{data["Notification"]}</a>"
-        $("#myDropDownBtn").css 'background', 'black'
+        $("#dropDownBtn").css 'background', 'purple'
       if data.hasOwnProperty("addedToYourFriend")
         $('#friendshipdiv').append "
         <tbody>
