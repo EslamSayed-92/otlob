@@ -1,7 +1,9 @@
 $(function(){
 	//= Submit the form of find friend action
 	invitedFriend=[]
+	invitedGroups=[]
 
+	//= add friend form submit action
 	$("#findFriend").submit(function(e){
 		e.preventDefault();
 		fdata = $(this).serialize();
@@ -24,8 +26,8 @@ $(function(){
 
 	})
 
+	//= Show Group click action
 	$(".shGroup").on("click",function(e){
-		alert("hello")
 		$.ajax({
 			url:"/groups/"+$(this).attr('data')+".json",
 			method:"get",
@@ -55,9 +57,7 @@ $(function(){
 
 	})
 
-	$("#friends").on("click","p",function(e){
-		console.log(e.target)
-	})
+	//= add friend in group form submit action
 	$("#addFriendToGroup").submit(function(e){
 		e.preventDefault();
 		gdata = $(this).serialize();
@@ -75,69 +75,28 @@ $(function(){
 			}
 		})
 	})
-	friends = $('.temp_information').data('friends')
-	orderId = $('.temp_information').data('orderId')
 
-	$("#fadd").click(function(e){
-		searchTxt = document.getElementById('fsearch').value
-		var flag=0
-		for (var i =0 ; i < Object.keys(friends).length;i++)
-		{
-			for (var key in friends[i])
-				{
-					if(key == 'friend')
-					{
-						if (searchTxt == friends[i][key])
-						{	flag=1
-							var id =friends[i]['id']
-
-							if (invitedFriend.includes(id))
-								{
-									alert("Kindly note that you can't add the same user twice")
-
-								}else 
-								{
-									console.log(invitedFriend)
-									invitedFriend.push(friends[i]['id'])
-									document.getElementById('invitedFriend').innerHTML+="<span id="+friends[i]['id']+">"+friends[i]['friend']+"<br /> <img src="+friends[i]['avatar']+ "style='hieght:200 px; width:100 px'><p onclick='deletef("+friends[i]['id']+")'>Delete </p></span>"
-								}
-						}
-					}
-					
-				}
-		}
-		if(flag==0)
-		{
-			alert("Kindly note that there is no friends of you with this name")
-		}
-	})
-	$('#gadd').click(function(e)
-	{
-		searchTxt = document.getElementById('gsearch').value
-
-	})
-
+	//= add order form submit action
 	$("#addFaG").click(function(e)
 	{
 		if (invitedFriend.length!=0)
 		{
 			friendsArr=invitedFriend.join("")
-			alert("submit function works ")
-			alert("enterd")
 		 	$.ajax({
-		 	      method : 'post',
-		 	      url : '/orders',
-		 	      data: {friends:friendsArr },
-		 	      success: function(result){
-		 	      		console.log(friendsArr)
-		 	      		alert(friendsArr)
-		 	        },
-		 	       errors: function(result)
-		 	       {
-		 	       	alert("error")
-		 	       }
-		 		})
-		}else
+	 	      method : 'post',
+	 	      url : '/orders',
+	 	      data: {friends:friendsArr },
+	 	      success: function(result){
+	 	      		console.log(friendsArr)
+	 	      		alert(friendsArr)
+	 	        },
+	 	       errors: function(result)
+	 	       {
+	 	       	alert("error")
+	 	       }
+	 		})
+		}
+		else
 		{
 			e.preventDefault();
 			alert("kindly enter the invitation part")
@@ -146,15 +105,26 @@ $(function(){
 	})
 
 
-	//= Create Order functions
+	//= Create Order function
 	$("#addOrder").click(function(e){
 		e.preventDefault();
 		mtype = $("input[name='mtype']:checked").val();
 		restaurant = $("#order_restaurant").val(); 
-		if(mtype == undefined)
-			alert("Please select order type");
-		else if(restaurant == "")
-			alert("Please enter order restaurant");
+		if(mtype == undefined){
+			$("#notice").removeClass("alert alert-success")
+			$("#notice").addClass("alert alert-warning")
+			$("#notice").text("Please select order type");
+		}
+		else if(restaurant == ""){
+			$("#notice").removeClass("alert alert-success")
+			$("#notice").addClass("alert alert-warning")
+			$("#notice").text("Please enter order restaurant");
+		}
+		else if(invitedFriend.length==0 || invitedGroups.length==0)	{
+			$("#notice").removeClass("alert alert-success")
+			$("#notice").addClass("alert alert-warning")
+			$("#notice").text("You Havent invited any of your friends yet")
+		}
 		else
 		{
 			$.ajax({
@@ -163,8 +133,6 @@ $(function(){
 				data:{order:{mtype:mtype, restaurant: restaurant}},
 				success:function(res){
 					$("#orderId").val(res.id);
-					$("#menu").css("display","block");
-					$("#invite").slideDown("slow");
 					invitedFriend=[]
 					invitedGroups=[]	
 				}
@@ -172,6 +140,7 @@ $(function(){
 		}
 	});
 
+	//= invite friend to oreder click function
 	$("#fadd").click(function(e){
 		e.preventDefault();
 		searchTxt = $('#fsearch').val()
@@ -197,12 +166,13 @@ $(function(){
 						}
 						else
 						{
+							$("#notice").removeClass("alert alert-danger")
 							$("#notice").addClass("alert alert-success");
 							invitedFriend.push(res.id);
 							htmlTxt = "<span id="+res.id+">"+res.name+"<br />"
 							htmlTxt +="<img src="+res.avatar+ "><a onclick='deletef("+res.id+")'>Remove"
 							htmlTxt += "</a></span>"
-							$('#invitedFriend').append(htmlTxt);
+							$('#invitedFriend').parents("").append(htmlTxt);
 						}
 					}
 				});
@@ -222,6 +192,7 @@ $(function(){
 		}
 	})
 
+	//= invite group to oreder click function
 	$('#gadd').click(function(e){
 		e.preventDefault();
 		searchTxt = $('#gsearch').val()
@@ -275,8 +246,7 @@ $(function(){
 
 	})
 
-
-
+	//= un invite friend to oreder click function
 	$(".uninvite").click(function(e){
 		e.preventDefault();
 		row = $(this).parents("tr");

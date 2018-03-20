@@ -166,17 +166,15 @@ h1{
   
 }
 .btn2 , #browse ,button , #addFaG {
-  width: 100px;
   border :none;
   outline: none;
-  height: 30px;
   background:#FF0000;
   color: #fff;
-  border-radius: 20px;
+  border-radius: 10px;
   text-align: center;
   margin-left: 10px;
-
- 
+  font-size: 16px;
+  font-weight: bold;
 }
 
 #r{
@@ -188,7 +186,7 @@ h1{
 }
 .h2norder{
   width: 300px;
-  border :none;
+  border :solid 1px black;
   outline: none;
   height: 45px;
   background:#FF0000;
@@ -196,7 +194,8 @@ h1{
   border-radius: 20px;
   text-align: center;
   margin-left: 10px;
-  
+  vertical-align: middle;
+  text-decoration: underline;
 }
 .borderorder{
 	 border-style: solid;
@@ -323,13 +322,10 @@ h3{
 
 
 .yourgroup{
-	padding-left: 50px;
-	padding-top: 180px;
+	/*padding-left: 50px;
+	padding-top: 180px;*/
 	width:500px;
 	float: left;
-}
-button{
-	padding-left: 50px;
 }
 
 .btn{
@@ -345,12 +341,9 @@ input[type="file"]
 	display: inline;
 }
 #invitedFriend{
-	display: none;
 	text-align: center;
-	float: right;
-	display: inline-block;
-	max-width: 80%;
 	border: 1px solid black;
+	padding: 1%;
 }
 
 .orderlist{
@@ -362,6 +355,7 @@ input[type="file"]
 
 #groups,#friends{
 	margin-bottom: 1%;
+	margin-top: 1%;
 }
 
 .friendsactivity, .orderlist{
@@ -381,4 +375,28 @@ input[type="file"]
 .h5{
 	padding-left: 500px;
 	color: #fff;
+}
+#notice{
+	margin-top: 5%;
+	margin-bottom: 5%;
+	font-size: 18px;
+	font-weight: bold;
+}
+.fa-user-plus{
+	cursor: pointer;
+}
+.oFrom{
+padding-left: 10%;
+}
+.oForm input[type='text']{
+padding-left: 1%;
+}
+.oForm input[type='submit']{
+margin-left: 2%;
+border-radius: 10px;
+background-color: #F00;
+color: #FFF;
+}
+.btn-no{
+cursor: default !important;
 }

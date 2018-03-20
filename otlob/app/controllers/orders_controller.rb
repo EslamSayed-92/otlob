@@ -30,6 +30,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
+    @@invitedFriends = Array.new
     @id = Order.last[:id]
     @order = Order.new
     @orderId = @id+1

@@ -1,50 +1,48 @@
+<!-- <div class="orderform"></div> -->
+<div class="container">
 
-<div class="orderform">
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-sm-8 text-left oForm">
+  <h1>Groups</h1>
 
-<h1>Groups</h1>
-
-<%= render 'form', group: @group %>
+  <%= render 'form', group: @group %>
+  <p id="notice"><%= notice %></p>
+  </div>
 </div>
 
-<div class="container">
-   <div class="row">
 
-<div class=" col-sm-6" style="float: left;">
-<div class="yourgroup">
+<div class="row">
+  <div class="col-sm-6" >
+  <!-- <div class="yourgroup"></div> -->
   <legend>Your Groups</legend>
-   <div class="btn-group " >
-    <% for grp in current_user.groups %>
-      <div>
-        <button class="shGroup btn btn-primary" data="<%= grp.id %>"><%= grp.name %></button>
+     <div class="btn-group " >
+      <% for grp in current_user.groups %>
+      <div style="margin-bottom: 2%">
+        <button class="btn btn-primary btn-no" data="<%= grp.id %>"><%= grp.name %></button>
 
-        <i class="fa fa-user-plus shGroup glyphicon glyphicon-plus" data="<%= grp.id %>" aria-hidden="true"></i>
-        
         <% if current_user.id==grp.user_id %>
+          <i class="fa fa-user-plus fa-lg shGroup glyphicon glyphicon-plus" data="<%= grp.id %>" aria-hidden="true"></i>
+        
           <%= link_to '', group_path(grp), method: :delete, data: { confirm: 'Are you sure?' },
-         :class => "fa fa-times"  %>
-         <% end %>
+          :class => "fa fa-times fa-lg"  %>
+        <% end %>
       </div>
-
-    <% end %>
+      <% end %>
      </div>
-     </div>
-     </div>
-
-<div class=" col-sm-6">
-<fieldset>
-  <legend>Group</legend>
-  <form id="addFriendToGroup">
-    <label for="fmail">Your friend email:</label>
-    <input type="email" name="fmail" required="required">
-    <input type="hidden" name="group" id="curGrp">
-    <input class="btn2" type="submit" value="Add" name="add">
-  </form>
-  <div id="grp" >
-
   </div>
 
-</fieldset>
+  <div class=" col-sm-6">
+    <legend>Group</legend>
+    <form id="addFriendToGroup">
+      <label for="fmail">Your friend email:</label>
+      <input type="email" name="fmail" required="required">
+      <input type="hidden" name="group" id="curGrp">
+      <input class="btn2" type="submit" value="Add" name="add">
+    </form>
+    <div id="grp" >
+    </div>
+  </div>
+
 </div>
-</div>
+
 </div>
