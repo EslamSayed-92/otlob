@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_groups_friends, only: [:new, :edit]
-
-
   # GET /orders
   # GET /orders.json
   @@invitedFriends = Array.new
@@ -147,9 +145,8 @@ class OrdersController < ApplicationController
         end
         @usersInsideOrder = @order.invitations.all
         @usersInsideOrder.each do |u|
-        ActionCable.server.broadcast "uni_brod_#{u.user_id}_channel" , {type:"orderInvitation", Notification: current_user.name+" invited yo to an order named "+@order.restaurant}
+        ActionCable.server.broadcast "uni_brod_#{u.user_id}_channel" , {Notification: current_user.name+" invited yo to an order named "+@order.restaurant,orderId: @order.id }
         end
-
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else

@@ -24,9 +24,11 @@
         <div class="btn-group">
           <button id="dropDownBtn" type="button" class="dropdown-toggle fa fa-bell-o h5" data-toggle="dropdown" aria-hidden="true" style="float: right;padding: 0px !important;">
           </button>
+          <input id="numOfNotifi" type="text" disabled value=0>
           <div id="notificationsOfUser" class="dropdown-menu">
           </div>
         </div>
+
         <%= link_to image_tag(current_user.avatar.url(:thumb) , :style => "width:10%; height:80%"), user_path(current_user) %>
         <strong class="white"><%= current_user.name %></strong>
         <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
@@ -42,10 +44,6 @@
     </div>
     </nav>
   <% end %>
-<<<<<<< HEAD
-
-=======
->>>>>>> 0a0c2b7d45d3a886a1878ecde654fe1d7f105060
     <%= yield %>
      <!-- <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p> -->
