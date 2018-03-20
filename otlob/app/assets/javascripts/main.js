@@ -120,7 +120,7 @@ $(function(){
 			$("#notice").addClass("alert alert-warning")
 			$("#notice").text("Please enter order restaurant");
 		}
-		else if(invitedFriend.length==0 || invitedGroups.length==0)	{
+		else if(invitedFriend.length==0 && invitedGroups.length==0)	{
 			$("#notice").removeClass("alert alert-success")
 			$("#notice").addClass("alert alert-warning")
 			$("#notice").text("You Havent invited any of your friends yet")
@@ -169,10 +169,11 @@ $(function(){
 							$("#notice").removeClass("alert alert-danger")
 							$("#notice").addClass("alert alert-success");
 							invitedFriend.push(res.id);
-							htmlTxt = "<span id="+res.id+">"+res.name+"<br />"
-							htmlTxt +="<img src="+res.avatar+ "><a onclick='deletef("+res.id+")'>Remove"
-							htmlTxt += "</a></span>"
-							$('#invitedFriend').parents("").append(htmlTxt);
+							htmlTxt = "<div class='col-sm-3 text-center' style='display:inline' id='"+e.id+"'>"
+							htmlTxt +="<img src='"+res.avatar+ "' height='100' width='100'><br/>"
+							htmlTxt += "<strong>"+res.name+"</strong><br/>"
+							htmlTxt += "<a onclick='deletef("+res.id+")'>Remove</a></div>"
+							$('#invitedFriend').append(htmlTxt);
 						}
 					}
 				});
@@ -220,9 +221,10 @@ $(function(){
 							{
 								msg = "<p class='alert alert-success'>"+e.message+"</p>";
 								invitedGroups.push(gid);
-								htmlTxt = "<span id="+e.id+">"+e.name+"<br />"
-								htmlTxt +="<img src="+e.avatar+ "><a onclick='deletef("+e.id+")'>Remove"
-								htmlTxt += "</a></span>"
+								htmlTxt = "<div class='col-sm-3 text-center' style='display:inline' id='"+e.id+"'>"
+								htmlTxt +="<img src='"+e.avatar+ "' height='100' width='100'><br/>"
+								htmlTxt += "<strong>"+e.name+"</strong><br/>"
+								htmlTxt += "<a onclick='deletef("+e.id+")'>Remove</a></div>"
 								$('#invitedFriend').append(htmlTxt);
 							}
 							$("#notice").append(msg);
@@ -247,30 +249,30 @@ $(function(){
 	})
 
 	//= un invite friend to oreder click function
-	$(".uninvite").click(function(e){
-		e.preventDefault();
-		row = $(this).parents("tr");
-		id= $(this).attr("data");
-		$.ajax({
-			method:"post",
-			url:"/invitations/"+id,
-			data:{_method:"delete"},
-			success:function(res){
-				$("#notice").text(res.message);
-				if(res.error){
-					$("#notice").removeClass("alert alert-success");
-					$("#notice").addClass("alert alert-danger");
-				}
-				else
-				{
-					$("#notice").removeClass("alert alert-danger");
-					$("#notice").addClass("alert alert-success");
-				}
-				row.remove();
-			}
-		})
+	// $(".uninvite").click(function(e){
+	// 	e.preventDefault();
+	// 	row = $(this).parents("tr");
+	// 	id= $(this).attr("data");
+	// 	$.ajax({
+	// 		method:"post",
+	// 		url:"/invitations/"+id,
+	// 		data:{_method:"delete"},
+	// 		success:function(res){
+	// 			$("#notice").text(res.message);
+	// 			if(res.error){
+	// 				$("#notice").removeClass("alert alert-success");
+	// 				$("#notice").addClass("alert alert-danger");
+	// 			}
+	// 			else
+	// 			{
+	// 				$("#notice").removeClass("alert alert-danger");
+	// 				$("#notice").addClass("alert alert-success");
+	// 			}
+	// 			row.remove();
+	// 		}
+	// 	})
 
-	})
+	// })
 
 })
 	function remFriend(e){
@@ -294,14 +296,6 @@ $(function(){
 	}
 
 
-
-
-	function deletef(id)
-	{
-		remove(invitedFriend,id)
-		document.getElementById(id).remove();
-	}
-
 	function remove(array, element) {
 	    const index = array.indexOf(element);
 	    array.splice(index, 1);
@@ -310,13 +304,26 @@ $(function(){
 	function deletef(id)
 	{
 		remove(invitedFriend,id)
-		document.getElementById(id).remove();
+		$.ajax({
+			method:"post",
+			url:"/orders/uninvite",
+			data:{uId: id},
+			success:function(res){
+				$("#notice").text(res.message);
+				if(res.error){
+					$("#notice").removeClass("alert alert-success")
+					$("#notice").addClass("alert alert-danger")
+				}else{
+					$("#notice").removeClass("alert alert-danger")
+					$("#notice").addClass("alert alert-success")
+			   	    $("#"+id).remove();
+			   	}
+			}
+		})
 	}
 
-	function remove(array, element) {
-	    const index = array.indexOf(element);
-	    array.splice(index, 1);
-	}
+	
+
 	function finish(e,data)
 	{
 		var finish= e.parentNode.parentNode

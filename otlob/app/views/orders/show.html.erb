@@ -1,27 +1,32 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-<p>
-  <strong>Order For: </strong>
-  <%if @res[:order].mtype == 0 %>
-  	BreakFast
-  <% else %>
-  	Lunch
-  <% end %>
-</p>
-<p>
-  <strong>From Restaurant: </strong>
-  <%= @res[:order].restaurant %>
-</p>
+<div class="row">
+  <div class="col-sm-4">
+    <p>
+      <strong>Order For: </strong>
+      <%if @res[:order].mtype == 0 %>
+      	BreakFast
+      <% else %>
+      	Lunch
+      <% end %>
+    </p>
+    <p>
+      <strong>From Restaurant: </strong>
+      <%= @res[:order].restaurant %>
+    </p>
 
-<div id="notice" class="alert"><%= notice %></div>
+    <div id="notice" class="alert"><%= notice %></div>
+  </div>
+</div>
 
-<h3><u>Invitations</u></h3>
+<div class="row">
+<h3><u>Order Details</u></h3>
 <table class="table">
   <tr>
-    <th>Invited</th>
-    <th>Status</th>
-    <th>Action</th>
+    <th>Person</th>
+    <th>Item</th>
+    <th>Amount</th>
+    <th>Price</th>
+    <th>Comment</th>
   </tr>
   <% for invited in @res[:users] %>
     <tr>
@@ -36,21 +41,39 @@
         <% end %>
       </td>
       <td>
-        <a data-confirm ='Are you sure you would like to uninvite '+<%= invited.user.name %>+' ?' data="<%= invited.id %>" class='uninvite'>
-          Un invite
-        </a>
       </td>
     </tr>
   <% end %>  
 </table>
+</div>
 
+<div class="row">
+<%= form_with(model: @res[:item], local: true) do |form| %>
+<table class="table table-condensed">
+  <tr>
+    <th><%= form.label :name %></th>
+    <th><%= form.label :Price %></th>
+    <th><%= form.label :Amount %></th>
+    <th><%= form.label :comment %></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><%= form.text_field :name, id: :item_name %></td>
+    <td><%= form.text_field :price, id: :item_price %></td>
+    <td><%= form.number_field :Amount, id: :item_amount %></td>
+    <td><%= form.text_area :comment, id: :item_comment %></td>
+    <td><%= form.submit :add %></td>
+  </tr>
+</table>
+<% end %>
 
+  
+  
+</div>
 
 <% if @order.status == 0  and @order.user_id == current_user.id %> 
 <%= link_to 'Delete', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to delete the order?'}%>  | 
 <%= link_to 'Edit', edit_order_path(@order) %> 
 <% end %> 
 
-</div>
-</div>
 </div>

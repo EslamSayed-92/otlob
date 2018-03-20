@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   delete '/invitations/:id', to:'invitations#destroy'
   post '/orders/invite', to: 'orders#invite'
-
+  post '/orders/uninvite', to: 'orders#uninvite'
 
   
 

@@ -342,7 +342,7 @@ input[type="file"]
 }
 #invitedFriend{
 	text-align: center;
-	border: 1px solid black;
+	border-left: 1px solid black;
 	padding: 1%;
 }
 

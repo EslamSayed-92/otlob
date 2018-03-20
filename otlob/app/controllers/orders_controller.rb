@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
    for i in @order.invitations
     @res[:users].push(i)
    end
-   @res
+   @res[:item] = Item.new
   end
 
   # GET /orders/new
@@ -58,7 +58,7 @@ class OrdersController < ApplicationController
 
   #= Append uid into invited Friends Array
   def invite
-    p @@invitedFriends
+    # p @@invitedFriends
     if params[:group_id].present?
       @group = Group.find(params[:group_id])
       @result = Array.new
@@ -86,6 +86,20 @@ class OrdersController < ApplicationController
     end
   end
 
+  #= remove invited Friends Array
+  def uninvite
+    if @@invitedFriends.include? params[:uId].to_i
+      @user = User.find(params[:uId].to_i)
+      if @@invitedFriends.delete(params[:uId].to_i)
+        render json: {error: false, message: @user.name+" un inveited from order" }
+      else
+        render json: {error: true, message: "can't un invite "+@user.name+" to order" }
+      end
+    else
+      render json: {error: true, message: @user.name+"is not invited to order" }
+    end
+  end
+
   def create
     p order_params
     @order = Order.new(order_params)
@@ -102,10 +116,9 @@ class OrdersController < ApplicationController
         for friend in @@invitedFriends
           @friend = User.find(friend)
           @res = inviteToOrder(@order,@friend)
-          p @res
           if !@res[:error]
             @result[:users].push(@res[:user])
-            ActionCable.server.broadcast "uni_brod_#{@res.user.id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
+            ActionCable.server.broadcast "uni_brod_#{@res[:user].id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
           end
         end
 
@@ -136,42 +149,6 @@ class OrdersController < ApplicationController
   #   end
   # end 
   # end
-
-  # def index
-  #   respond_to do |format|
-  #     if @order.save
-  #       # get all friends ids and send order to them
-  #       @friends = current_user.friendships.all
-  #       @friends.each do |friend|
-  #         ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
-  #       end
-  #       format.html { redirect_to @order, notice: 'Order was successfully created.' }
-  #       format.json { render :show, status: :created, location: @order }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @order.errors, status: :unprocessable_entity }
-  #     end
-  #   end 
-  # end
-
-
-  # def index
-  #   respond_to do |format|
-  #     if @order.save
-  #       # get all friends ids and send order to them
-  #       @friends = current_user.friendships.all
-  #       @friends.each do |friend|
-  #         ActionCable.server.broadcast "uni_brod_#{friend.friend_id}_channel" , @order
-  #       end
-  #       format.html { redirect_to @order, notice: 'Order was successfully created.' }
-  #       format.json { render :show, status: :created, location: @order }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @order.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end 
-
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
