@@ -18,6 +18,10 @@
       <strong>Ordered By: </strong>
       <%= User.find(@res[:order].user_id).name %>
     </p>
+    <% if @order.status == 0  and @order.user_id == current_user.id %> 
+    <%= link_to 'Delete', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to delete the order?'}%>  | 
+    <%= link_to 'Edit', edit_order_path(@order) %> 
+    <% end %> 
 
     <div id="notice" class="alert"><%= notice %></div>
   </div>
@@ -54,8 +58,21 @@
 </div>
 
 <div class="row">
+
+<table class="table table-condensed" id='det'>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Amount</th>
+    <th>Comment</th>
+    <th>Actions</th>
+  </tr>
+  <% @items = @order.items.all %>
+  <%= render :template => 'items/index.html.erb', :locals => {:@items => @items} %>
+</table>
+
 <%= form_with(model: @res[:item], local: true) do |form| %>
-<table class="table table-condensed">
+<table class="table-condensed" style="margin-top: 5%">
   <tr>
     <th><%= form.label :name %></th>
     <th><%= form.label :Price %></th>
@@ -63,13 +80,13 @@
     <th><%= form.label :comment %></th>
     <th></th>
   </tr>
-  <%= render :template => 'items/index.html.erb', :locals => {:@items => @items} %>
   <tr>
-    <td><%= form.text_field :name, id: :item_name %></td>
-    <td><%= form.text_field :price, id: :item_price %></td>
-    <td><%= form.number_field :Amount, id: :item_amount %></td>
-    <td><%= form.text_area :comment, id: :item_comment %></td>
-    <td><%= form.submit :add %></td>
+    <%= form.hidden_field :add, id: :order_id, value: @order.id %>
+    <td><%= form.text_field :name, id: :item %></td>
+    <td><%= form.text_field :price, id: :price %></td>
+    <td><%= form.number_field :Amount, id: :amount %></td>
+    <td><%= form.text_area :comment, id: :comment %></td>
+    <td><%= form.submit :add, id: :submit %></td>
   </tr>
 </table>
 <% end %>
@@ -77,10 +94,5 @@
   
   
 </div>
-
-<% if @order.status == 0  and @order.user_id == current_user.id %> 
-<%= link_to 'Delete', order_path(@order),method: :delete,data:{confirm:'Are you sure you would like to delete the order?'}%>  | 
-<%= link_to 'Edit', edit_order_path(@order) %> 
-<% end %> 
 
 </div>

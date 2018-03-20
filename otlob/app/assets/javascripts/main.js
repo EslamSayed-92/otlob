@@ -193,27 +193,32 @@ $(function(){
 		}
 	})
 	// add item to order
-	$("#submit").click (function()
+	$("#submit").click (function(e)
 	{
+		e.preventDefault()
 		Item= $("#item").val()
 		Amount= $("#amount").val()
 		Price= $("#price").val()
 		Comment= $("#comment").val()
-		User= $("#user").val()
-		Order=$("#order").val()
-		console.log($("#item").empty())
-		if ($.isEmptyObject(Item)||$.isEmptyObject(Price))
+		Order=$("#order_id").val()
+
+		if ($.isEmptyObject(Item) || $.isEmptyObject(Price) || $.isEmptyObject(Amount))
 		{
 			alert("The item, price and amount can't be left blank")
 		}else
 		{
-			console.log("intered")
 			$.ajax({
-		       url: '/createitem',
+		       url: '/items.json',
 		       method:"post",
-		       data: {item:Item,price:Price,comment:Comment,user:User,order:Order,amount:Amount},
+		       data: {item: {name:Item,price:Price,comment:Comment,order_id:Order,amount:Amount}},
 		       success: function(res) {
-		        alert("Enter")
+		       	htmltxt = "<tr><td>"+res.name+"</td><td>"+res.price+"</td><td>"+Amount+"</td>"
+		       	htmltxt += "<td>"+res.comment+"</td>";
+		       	htmltxt += "<td><a href='/items/"+res.id+"/edit'>Edit</a> |"
+		       	htmltxt += "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/items/"+res.id+"'>Delete</a>"
+		       	htmltxt += "</td></tr>";
+		       	$("#det").append(htmltxt)
+
 		       },
 		       errors:function(error)
 		       {
