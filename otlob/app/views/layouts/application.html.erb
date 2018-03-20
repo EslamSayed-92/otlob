@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Otlob</title>
+    <%= csrf_meta_tags %>
+
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+
+  <body>
+
+  <% if current_user.present? %>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid" >
+      <ul>
+        <li><h6><%= link_to 'Home', root_url , id: :h6 %></h6></li>
+        <li><h6><%= link_to 'Friends', friendships_url ,id: :h6 %></h6></li>
+        <li><h6><%= link_to 'Groups', groups_url ,id: :h6 %></h6></li>
+        <li><h6><%= link_to 'Orders', orders_url ,id: :h6 %></h6></li>
+      </ul>
+
+      <% if !current_user.nil? %>
+      <div class="navbar-right">
+        <div class="btn-group">
+          <button id="dropDownBtn" type="button" class="dropdown-toggle fa fa-bell-o h5" data-toggle="dropdown" aria-hidden="true" style="float: right;padding: 0px !important;">
+          </button>
+          <input id="numOfNotifi" type="text" disabled value=0>
+          <div id="notificationsOfUser" class="dropdown-menu">
+          </div>
+        </div>
+
+        <%= link_to image_tag(current_user.avatar.url(:thumb) , :style => "width:10%; height:80%"), user_path(current_user) %>
+        <strong class="white"><%= current_user.name %></strong>
+        <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
+        </div>
+      <% else %>
+        <div class="ls">
+        <ul class="nav navbar-nav navbar-right" id="lgg">
+          <li><h6><%= link_to "Log in", new_user_session_path ,id: :h6 %></h6></li>
+          <li><h6><%= link_to "Sign Up", new_user_registration_path, id: :h6 %></h6></li>
+          </ul>
+      <% end %>
+
+    </div>
+    </nav>
+  <% end %>
+    <%= yield %>
+     <!-- <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p> -->
+
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'load' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'load' %>
+  </body>
+</html>
