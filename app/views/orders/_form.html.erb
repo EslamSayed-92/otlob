@@ -1,0 +1,74 @@
+<div class="container" style="margin-top: 5%;">
+
+<div class="col-sm-6">
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h5><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h5>
+      <ul>
+        <% order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field" id="menu">
+    <%= form.label :menu %>
+    <%= form.file_field :menu %>
+  </div>
+
+  <div class="field">
+    <%= form.label :'Order For: ' %>
+    <% if @order.mtype == 0 %>
+      <%= form.radio_button :mtype, '0', require: "required", checked: true %> BreakFast
+      <%= form.radio_button :mtype, '1', require: "required" %> Lunch
+    <% elsif @order.mtype == 1 %>
+      <%= form.radio_button :mtype, '0', require: "required" %> BreakFast
+      <%= form.radio_button :mtype, '1', require: "required", checked: true %> Lunch
+    <% else %>
+      <%= form.radio_button :mtype, '0', require: "required", checked: true %> BreakFast
+      <%= form.radio_button :mtype, '1', require: "required" %> Lunch
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :'From: ' %>
+    <%= form.text_field :restaurant, id: :order_restaurant, required: true%>
+  </div>
+
+  <div id="friends">
+    <input list="myfriends" id='fsearch' name="friend" required="true">
+    <datalist id="myfriends">
+      <% for f in @friends %>
+        <option value="<%= f[:friend] %>" data-id="<%= f[:id] %>">
+      <% end %>
+    </datalist>
+    <button id="fadd"> Add Friend</button>
+  </div>
+
+  <div id="groups">
+    <input list="mygroups" id='gsearch' name="group" required="true">
+    <datalist id="mygroups">
+      <% for g in @groups %>
+        <option value="<%= g.name %>" data-id="<%= g.id %>" >
+      <% end %>
+    </datalist>
+    <button id="gadd"> Add Group</button>
+  </div>
+
+  <div class="actions submit">
+    <%= form.submit :'publish' , id: :addOrder, :class =>'btn2' %>
+  </div>
+
+  <div id="notice" class="alert"><%= notice %></div>
+  <% end %>
+</div>
+
+
+  <div class=" col-sm-6 text-left" id="invitedFriend" >
+  <h3 class="h2norder">Invited Friends</h3>
+  </div>
+
+</div>
