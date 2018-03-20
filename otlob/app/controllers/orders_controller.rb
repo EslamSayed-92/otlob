@@ -33,22 +33,24 @@ class OrdersController < ApplicationController
   def new
     @@invitedFriends = Array.new
     @order = Order.new
-    #   @friendships = current_user.friendships.all
-    #   @friends = Array.new
-    #   @friendships.each do |friendship|
-    #   @friend = Hash.new
-    #   @friend[:friend] = User.find(friendship.friend_id).name
-    #   @friend[:id] = friendship.friend_id
-    #   @friends.push(@friend)
-    # end
-    # @friends
+      @friendships = current_user.friendships.all
+      @friends = Array.new
+      @friendships.each do |friendship|
+      @friend = Hash.new
+      @friend[:friend] = User.find(friendship.friend_id).name
+      @friend[:id] = friendship.friend_id
+      @friends.push(@friend)
+    end
+    @friends
 
-    # @groups=current_user.groups.all  
+    @groups=current_user.groups.all
   end
 
   # GET /orders/1/edit
   def edit
   end
+
+
   def orderDetails
   end
 
@@ -66,7 +68,7 @@ class OrdersController < ApplicationController
         if @@invitedFriends.include? user.id
           @res = { error: true, message: user.name+" is already invited to order" }
         else
-          @@invitedFriends.push(user.id)   
+          @@invitedFriends.push(user.id)
           @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
         end
         @result.push(@res)
@@ -78,7 +80,7 @@ class OrdersController < ApplicationController
       if @@invitedFriends.include? user.id
         @res = { error: true, message: user.name+" is already invited to order" }
       else
-        @@invitedFriends.push(user.id)   
+        @@invitedFriends.push(user.id)
         @res = { error: false, message: user.name+" invited to order", name: user.name, avatar: user.avatar.url(:thumb), id: user.id }
       end
       render json: @res
@@ -146,7 +148,7 @@ class OrdersController < ApplicationController
   #       format.json { render json: @order.errors, status: :unprocessable_entity }
   #     end
   #   end
-  # end 
+  # end
   # end
 
   # PATCH/PUT /orders/1
@@ -179,6 +181,9 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
+    p params
+    @order =  Order.find(params[:id])
+    p "helloFromDestroy"
     if @order.user_id == current_user.id
       @order.destroy
       respond_to do |format|
@@ -187,13 +192,13 @@ class OrdersController < ApplicationController
       end
     else
        if user_signed_in?
-        redirect_to order_path(),
-          notice: "Only Owner Who Can Delete The Order"
+        redirect_to order_path(), notice: "Only Owner Who Can Delete The Order"
       else
         redirect_to new_user_session_path
       end
     end
   end
+
   def finish
     p params[:id]
     @order = Order.where(id:params[:id]).update_all(status: 1)
@@ -219,7 +224,7 @@ class OrdersController < ApplicationController
         @friends.push(@friend)
       end
       @friends
-      @groups=current_user.groups.all 
+      @groups=current_user.groups.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -251,7 +256,7 @@ class OrdersController < ApplicationController
           @invitation.order = @order
           @invitation.user = @friend
           @invitation.status = 0
-          
+
           if @invitation.save
             @res = { error: false, user: @friend }
             ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"invToOrder", Notification: current_user.name+" invited you to an order"}
@@ -264,4 +269,3 @@ class OrdersController < ApplicationController
       end
       return @res
     end
-
