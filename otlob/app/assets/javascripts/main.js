@@ -218,7 +218,6 @@ $(function(){
 		       	htmltxt += "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/items/"+res.id+"'>Delete</a>"
 		       	htmltxt += "</td></tr>";
 		       	$("#det").append(htmltxt)
-
 		       },
 		       errors:function(error)
 		       {
@@ -281,6 +280,64 @@ $(function(){
 			$("#notice").text("Kindly note that there is no group of you with this name");
 		}
 
+	})
+
+	$("#invFriends").click(function(e){
+		Order=$("#order_id").val()
+		$("#body").html("")	
+		$("#title").text("")
+		$.ajax({
+	       url: '/invitations/invFriends',
+	       method:"get",
+	       data: {order:Order,which:'invited'},
+	       success: function(res) {
+	       		if(res.length==0){
+	       			alert("No Invited Friends")
+	       		}else{
+	       			$("#title").text("Invited Friends")
+		       		$.each(res, function(i,e){
+		       			htmlTxt = "<div class='col-sm-3'><img style='width:50px; height:50px;' src='"+e.avatar+"'>"
+		       			htmlTxt += "<span>"+e.name+"</span><br></div>"
+		       			// htmlTxt += "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/items/"+e.id+"'>un invite</a>"
+		       			$("#body").append(htmlTxt)
+		       		});
+		       		$("#myModal").modal();
+	       		}
+	       },
+	       errors:function(error)
+	       {
+	       		alert("error")
+	       }
+	     });
+	})
+
+	$("#joinFriends").click(function(e){
+		Order=$("#order_id").val()
+		$("#body").html("")	
+		$("#title").text("")
+		$.ajax({
+	       url: '/invitations/invFriends',
+	       method:"get",
+	       data: {order:Order,which:'joined'},
+	       success: function(res) {
+	       		if(res.length==0){
+	       			alert("No Joined Friends")
+	       		}else{
+	       			$("#title").text("Joined Friends")
+		       		$.each(res, function(i,e){
+		       			htmlTxt = "<div class='col-sm-3'><img style='width:50px; height:50px;' src='"+e.avatar+"'>"
+		       			htmlTxt += "<span>"+e.name+"</span><br></div>"
+		       			// htmlTxt += "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/items/"+e.id+"'>un invite</a>"
+		       			$("#body").append(htmlTxt)
+		       		});
+		       		$("#myModal").modal();
+	       		}
+	       },
+	       errors:function(error)
+	       {
+	       		alert("error")
+	       }
+	     });
 	})
 
 	//= un invite friend to oreder click function

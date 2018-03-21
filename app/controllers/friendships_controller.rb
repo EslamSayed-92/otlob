@@ -29,8 +29,8 @@ class FriendshipsController < ApplicationController
         @friendship = current_user.friendships.build(:friend_id => @friend.id)
         if @friendship.save
           @res = { error: false, message: @friend.name+" added to your friend list" }
-          ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {addedToYourFriend: @friend,friendShip:@friendship}
-          ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"friendAdd", Notification: current_user.name+" added you as friend"}
+          #ActionCable.server.broadcast "uni_brod_#{current_user.id}_channel" , {addedToYourFriend: @friend,friendShip:@friendship}
+          #ActionCable.server.broadcast "uni_brod_#{@friend.id}_channel" , {type:"friendAdd", Notification: current_user.name+" added you as friend"}
         else
           @res = { error: true, message: "Unable to add "+@friend.email+" to your friend list" }
         end
@@ -55,7 +55,7 @@ class FriendshipsController < ApplicationController
 
   def destroy
     @friendship = current_user.friendships.find(params[:id])
-    ActionCable.server.broadcast "uni_brod_#{@friendship.friend_id}_channel" , {type:"friendDelete", Notification: current_user.name+"unfriend you"}
+    #ActionCable.server.broadcast "uni_brod_#{@friendship.friend_id}_channel" , {type:"friendDelete", Notification: current_user.name+"unfriend you"}
     @friendship.destroy
     redirect_to friendships_url
   end

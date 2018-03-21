@@ -406,10 +406,27 @@ vertical-align: middle;
 color:#FFF;
 }
 ul{
-margin-top: 5px !important;
+margin-top: 0px !important;
 }
+.nav-right{}
 .fa-bell-o{
 margin-right: 15%;
 float: right;
 padding: 5px !important;
+border-radius: 10px;
+}
+.modal-header{
+	height: 2em;
+    background-color: white;
+    border: solid 1px black;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0 2% 0 2%;
+}
+.modal-content{
+	height: 8em;
+}
+#numOfNotifi{
+	/*width: 5px;
+	border-radius: 10px;*/
 }
